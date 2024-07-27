@@ -8,7 +8,7 @@
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ref, onMounted } from 'vue'
-import { Basic } from './Basic'
+import { Basic } from './basic-example/Basic'
 
 const el = ref()
 onMounted(() => {
