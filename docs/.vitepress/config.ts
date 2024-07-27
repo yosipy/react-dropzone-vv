@@ -3,11 +3,15 @@ import { defineConfig } from "vitepress"
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "react-dropzone-vv",
-  description: "react-dropzone-vv docs",
+  description:
+    "react-dropzone-vv is a simple React hook " +
+    "that creates a drag-and-drop zone for files. " +
+    "Simple, yet customizable by the user.",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
+      { text: "Introduction", link: "/introduction/what-is-react-dropzone-vv" },
       { text: "Examples", link: "/examples/basic-example" },
     ],
 
@@ -15,7 +19,15 @@ export default defineConfig({
       {
         text: "Introduction",
         items: [
+          {
+            text: "What is react-dropzone-vv",
+            link: "/introduction/what-is-react-dropzone-vv",
+          },
           { text: "Getting Started", link: "/introduction/getting-started" },
+          {
+            text: "Hooks and Components",
+            link: "/introduction/hooks-and-components",
+          },
         ],
       },
       {
