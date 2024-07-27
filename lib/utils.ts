@@ -35,7 +35,7 @@ export const isExtensionMatch = (file: File, extensions: string[]) => {
   const fileName = file.name.toLowerCase()
 
   return extensions.some((extension) =>
-    fileName.endsWith(extension.toLowerCase()),
+    fileName.endsWith(extension.toLowerCase())
   )
 }
 
@@ -54,6 +54,8 @@ export const isMimeTypeMatch = (file: File, mimeTypes: string[]) => {
 }
 
 export const isAcceptedFile = (file: File, accept: string) => {
+  if (accept == "") return true
+
   const { mimeTypes, extensions } = splitAccept(accept)
 
   return isExtensionMatch(file, extensions) || isMimeTypeMatch(file, mimeTypes)
@@ -64,7 +66,7 @@ export const classifyByAcceptability = (
   options: {
     accept: string
     multiple: boolean
-  },
+  }
 ) => {
   let classifiedFiles: ClassifiedFile[] = []
 

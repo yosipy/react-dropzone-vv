@@ -3,22 +3,27 @@
 layout: home
 
 hero:
-  name: "react-dropzone-vv docs"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "react-dropzone-vv"
+  text: ""
+  tagline: "react-dropzone-vv is a simple React hook that creates a drag-and-drop zone for files. Simple, yet customizable by the user."
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: What is react-dropzone-vv
+      link: /introduction/what-is-react-dropzone-vv
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Getting Started
+      link: /introduction/getting-started.html
+    - theme: alt
+      text: Github
+      link: https://github.com/yosipy/react-dropzone-vv
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Lightweight
+    details: Small package just to create drag-and-drop zones
+    icon: 📃
+  - title: It's used in my application
+    details: ImgRoller is a free website that allows you to resize and compress multiple images at once.
+    icon:
+      src: /imgroller.svg
+    link: https://yosidev.com/tools/imgroller/en/
 ---

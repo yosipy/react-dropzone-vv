@@ -5,6 +5,7 @@ import {
   splitAccept,
   isExtensionMatch,
   isMimeTypeMatch,
+  isAcceptedFile,
   classifyByAcceptability,
 } from "./utils"
 
@@ -106,6 +107,32 @@ describe("isMimeTypeMatch", () => {
     describe("If the mimeTypes is not the same mimeTypes as the file", () => {
       test("Should return false", () => {
         expect(isMimeTypeMatch(file, ["image/*"])).toBe(false)
+      })
+    })
+  })
+})
+
+describe("isAcceptedFile", () => {
+  const textFile = new File(["text"], "text.txt", {
+    type: "text/plain",
+  })
+
+  describe("If accept is empty text", () => {
+    test("Should return true", () => {
+      expect(isAcceptedFile(textFile, "")).toBe(true)
+    })
+  })
+
+  describe("If accept is not empty text", () => {
+    describe("If accept is same meme type of file", () => {
+      test("Should return true", () => {
+        expect(isAcceptedFile(textFile, "text/plain")).toBe(true)
+      })
+    })
+
+    describe("If accept is different meme type of file", () => {
+      test("Should return false", () => {
+        expect(isAcceptedFile(textFile, "text/javascript")).toBe(false)
       })
     })
   })
