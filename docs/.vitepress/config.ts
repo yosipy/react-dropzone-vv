@@ -28,4 +28,9 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/yosipy/react-dropzone-vv" },
     ],
   },
+  vite: {
+    resolve: {
+      alias: [{ find: "@lib", replacement: "/../lib" }],
+    },
+  },
 })

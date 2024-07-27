@@ -31,5 +31,5 @@
       "@lib/*": ["./lib/*"]
     }
   },
-  "include": ["./lib", "./src"]
+  "include": ["./lib", "./src", "./docs"]
 }
