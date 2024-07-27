@@ -48,12 +48,12 @@ export const Accept: FC = () => {
   })
 
   return (
-    <section style={{ borderStyle: "solid", padding: "1rem" }}>
+    <section style={{ border: "solid", padding: "1rem" }}>
       <ReactDropzoneVV
         reactDropzoneVV={reactDropzoneVV}
         style={{
           padding: "2rem",
-          borderStyle: "dashed",
+          border: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
         }}
       >
