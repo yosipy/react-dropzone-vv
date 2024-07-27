@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  ts-test:
+    name: TS Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+      - name: Cache node modules
+        uses: actions/cache@v4
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-npm-${{ env.cache-name }}-${{ hashFiles('./package-lock.json') }}
+      - name: npm ci
+        if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+        run: |
+          npm ci
+      - name: Run test
+        run: |
+          npm run test
+      - name: Run build
+        run: npm run build
