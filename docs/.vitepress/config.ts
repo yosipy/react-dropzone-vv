@@ -20,6 +20,10 @@ export default defineConfig({
             text: "Accepting specific file types",
             link: "/examples/accepting-specific-file-types",
           },
+          {
+            text: "Opening File Dialog Programmatically",
+            link: "/examples/opening-file-dialog-programmatically",
+          },
         ],
       },
     ],
