@@ -29,7 +29,7 @@ const App: FC = () => {
         reactDropzoneVV={reactDropzoneVV}
         style={{
           padding: "3rem",
-          borderStyle: "dashed 2px",
+          borderStyle: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "grey" : "",
         }}
       >
