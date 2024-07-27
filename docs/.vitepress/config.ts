@@ -8,17 +8,17 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "Examples", link: "/examples/basic-examples" },
+      { text: "Examples", link: "/examples/basic-example" },
     ],
 
     sidebar: [
       {
         text: "Examples",
         items: [
-          { text: "Basic Examples", link: "/examples/basic-examples" },
+          { text: "Basic Example", link: "/examples/basic-example" },
           {
-            text: "Styling Dropzone Examples",
-            link: "/examples/styling-dropzone-examples",
+            text: "Accepting specific file types",
+            link: "/examples/accepting-specific-file-types",
           },
         ],
       },
