@@ -13,6 +13,12 @@ export default defineConfig({
 
     sidebar: [
       {
+        text: "Introduction",
+        items: [
+          { text: "Getting Started", link: "/introduction/getting-started" },
+        ],
+      },
+      {
         text: "Examples",
         items: [
           { text: "Basic Example", link: "/examples/basic-example" },
