@@ -1,0 +1,208 @@
+import { describe, expect, test } from "vitest"
+
+import {
+  ensureError,
+  splitAccept,
+  isExtensionMatch,
+  isMimeTypeMatch,
+  classifyByAcceptability,
+} from "./utils"
+
+describe("ensureError", () => {
+  describe("If error type is Error", () => {
+    test("Should return Error object", () => {
+      const resultError = ensureError(new Error("World is end."))
+      expect(resultError.message).toBe("World is end.")
+    })
+  })
+
+  describe("If error type is string", () => {
+    test("Should return Error object with inputed text", () => {
+      const resultError = ensureError("World is end.")
+      expect(resultError.message).toBe("World is end.")
+    })
+  })
+
+  describe("If error type is object (and is not null)", () => {
+    test("Should return Error object with stringify object", () => {
+      const resultError = ensureError({ message: "World is end." })
+      expect(resultError.message).toBe('{"message":"World is end."}')
+    })
+  })
+
+  describe("If error type is other", () => {
+    test("Should return Error object with 'Unknown error'", () => {
+      const resultError = ensureError(0)
+      expect(resultError.message).toBe("Unknown error")
+    })
+  })
+})
+
+describe("splitAccept", () => {
+  test("Should return separated mimeTypes and extensions", () => {
+    expect(splitAccept("image/jpeg,video/*,.webp")).toStrictEqual({
+      mimeTypes: ["image/jpeg", "video/*"],
+      extensions: [".webp"],
+    })
+  })
+
+  describe("If '/' is not included", () => {
+    test("Should raise an exception", () => {
+      expect(() => splitAccept("imagejpeg")).toThrowError("'accept' is invalid")
+    })
+  })
+
+  describe("If the first character is not a '.'", () => {
+    test("Should raise an exception", () => {
+      expect(() => splitAccept("png")).toThrowError("'accept' is invalid")
+    })
+  })
+})
+
+describe("isExtensionMatch", () => {
+  const file = new File(["hoge"], "hoge.txt", {
+    type: "text/plain",
+  })
+
+  describe("If the extensions contains the same extension as the file", () => {
+    test("Should return true", () => {
+      expect(isExtensionMatch(file, [".txt"])).toBe(true)
+    })
+  })
+
+  describe("If the extensions does not contain the same extension as the file", () => {
+    test("Should return false", () => {
+      expect(isExtensionMatch(file, [".ymmp"])).toBe(false)
+    })
+  })
+})
+
+describe("isMimeTypeMatch", () => {
+  const file = new File(["hoge"], "hoge.txt", {
+    type: "text/plain",
+  })
+
+  describe("If mimeTypes does not contain wildcards", () => {
+    describe("If the mimeTypes is the same mimeTypes as the file", () => {
+      test("Should return true", () => {
+        expect(isMimeTypeMatch(file, ["text/plain"])).toBe(true)
+      })
+    })
+
+    describe("If the mimeTypes is not the same mimeTypes as the file", () => {
+      test("Should return false", () => {
+        expect(isMimeTypeMatch(file, ["text/javascript"])).toBe(false)
+      })
+    })
+  })
+
+  describe("If mimeTypes contain wildcards", () => {
+    describe("If the mimeTypes is the same mimeTypes as the file", () => {
+      test("Should return true", () => {
+        expect(isMimeTypeMatch(file, ["text/*"])).toBe(true)
+      })
+    })
+
+    describe("If the mimeTypes is not the same mimeTypes as the file", () => {
+      test("Should return false", () => {
+        expect(isMimeTypeMatch(file, ["image/*"])).toBe(false)
+      })
+    })
+  })
+})
+
+describe("classifyByAcceptability", () => {
+  const textFile = new File(["text"], "text.txt", {
+    type: "text/plain",
+  })
+  const jsFile = new File(["javascript"], "javascript.js", {
+    type: "text/javascript",
+  })
+
+  describe("If options.multiple is false", () => {
+    const multiple = false
+
+    describe("If input one file", () => {
+      test("Status should be accepted and errorCode should be undefined", () => {
+        const classifiedFiles = classifyByAcceptability([textFile], {
+          accept: "text/plain",
+          multiple,
+        })
+        expect(classifiedFiles).toStrictEqual([
+          {
+            status: "accepted",
+            file: textFile,
+            errorCode: undefined,
+          },
+        ])
+      })
+    })
+
+    describe("If input multi files", () => {
+      test("Status should be rejected and errorCode should be more-than-one-file", () => {
+        const classifiedFiles = classifyByAcceptability([textFile, jsFile], {
+          accept: "image/png",
+          multiple,
+        })
+        expect(classifiedFiles).toStrictEqual([
+          {
+            status: "rejected",
+            file: textFile,
+            errorCode: "more-than-one-file",
+          },
+          {
+            status: "rejected",
+            file: jsFile,
+            errorCode: "more-than-one-file",
+          },
+        ])
+      })
+    })
+  })
+
+  describe("If options.multiple is true", () => {
+    const multiple = true
+
+    describe("If input files mimeType is included options.accept", () => {
+      test("Status should be accepted and errorCode should be undefined", () => {
+        const classifiedFiles = classifyByAcceptability([textFile, jsFile], {
+          accept: "text/*",
+          multiple,
+        })
+        expect(classifiedFiles).toStrictEqual([
+          {
+            status: "accepted",
+            file: textFile,
+            errorCode: undefined,
+          },
+          {
+            status: "accepted",
+            file: jsFile,
+            errorCode: undefined,
+          },
+        ])
+      })
+    })
+
+    describe("If input file mimeType is not included options.accept", () => {
+      test("Status should be rejected and errorCode should be accept-violations", () => {
+        const classifiedFiles = classifyByAcceptability([textFile, jsFile], {
+          accept: "image/png",
+          multiple,
+        })
+        expect(classifiedFiles).toStrictEqual([
+          {
+            status: "rejected",
+            file: textFile,
+            errorCode: "accept-violations",
+          },
+          {
+            status: "rejected",
+            file: jsFile,
+            errorCode: "accept-violations",
+          },
+        ])
+      })
+    })
+  })
+})
