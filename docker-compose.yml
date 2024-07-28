@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     command: >
-      npm run dev -- --host 0.0.0.0
+      npm run docs:dev -- --host 0.0.0.0
     working_dir: /app
     ports:
       - 5173:5173
