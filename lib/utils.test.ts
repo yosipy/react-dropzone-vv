@@ -152,7 +152,7 @@ describe("classifyByAcceptability", () => {
     const multiple = false
 
     describe("If input one file", () => {
-      test("Status should be accepted and errorCode should be undefined", () => {
+      test("Status should be accepted and rejectedCode should be undefined", () => {
         const classifiedFiles = classifyByAcceptability([textFile], {
           accept: "text/plain",
           multiple,
@@ -161,14 +161,14 @@ describe("classifyByAcceptability", () => {
           {
             status: "accepted",
             file: textFile,
-            errorCode: undefined,
+            rejectedCode: undefined,
           },
         ])
       })
     })
 
     describe("If input multi files", () => {
-      test("Status should be rejected and errorCode should be more-than-one-file", () => {
+      test("Status should be rejected and rejectedCode should be more-than-one-file", () => {
         const classifiedFiles = classifyByAcceptability([textFile, jsFile], {
           accept: "image/png",
           multiple,
@@ -177,12 +177,12 @@ describe("classifyByAcceptability", () => {
           {
             status: "rejected",
             file: textFile,
-            errorCode: "more-than-one-file",
+            rejectedCode: "more-than-one-file",
           },
           {
             status: "rejected",
             file: jsFile,
-            errorCode: "more-than-one-file",
+            rejectedCode: "more-than-one-file",
           },
         ])
       })
@@ -193,7 +193,7 @@ describe("classifyByAcceptability", () => {
     const multiple = true
 
     describe("If input files mimeType is included options.accept", () => {
-      test("Status should be accepted and errorCode should be undefined", () => {
+      test("Status should be accepted and rejectedCode should be undefined", () => {
         const classifiedFiles = classifyByAcceptability([textFile, jsFile], {
           accept: "text/*",
           multiple,
@@ -202,19 +202,19 @@ describe("classifyByAcceptability", () => {
           {
             status: "accepted",
             file: textFile,
-            errorCode: undefined,
+            rejectedCode: undefined,
           },
           {
             status: "accepted",
             file: jsFile,
-            errorCode: undefined,
+            rejectedCode: undefined,
           },
         ])
       })
     })
 
     describe("If input file mimeType is not included options.accept", () => {
-      test("Status should be rejected and errorCode should be accept-violations", () => {
+      test("Status should be rejected and rejectedCode should be accept-violations", () => {
         const classifiedFiles = classifyByAcceptability([textFile, jsFile], {
           accept: "image/png",
           multiple,
@@ -223,12 +223,12 @@ describe("classifyByAcceptability", () => {
           {
             status: "rejected",
             file: textFile,
-            errorCode: "accept-violations",
+            rejectedCode: "accept-violations",
           },
           {
             status: "rejected",
             file: jsFile,
-            errorCode: "accept-violations",
+            rejectedCode: "accept-violations",
           },
         ])
       })
@@ -243,17 +243,17 @@ describe("splitClassifiedFiles", () => {
       {
         status: "accepted",
         file: new File(["hoge"], "accepted1.txt", { type: "text/plain" }),
-        errorCode: undefined,
+        rejectedCode: undefined,
       },
       {
         status: "accepted",
         file: new File(["hoge"], "accepted2.txt", { type: "text/plain" }),
-        errorCode: undefined,
+        rejectedCode: undefined,
       },
       {
         status: "rejected",
         file: new File(["hoge"], "rejected.txt", { type: "text/plain" }),
-        errorCode: "accept-violations",
+        rejectedCode: "accept-violations",
       },
     ]
   })
@@ -270,7 +270,7 @@ describe("splitClassifiedFiles", () => {
       {
         status: "rejected",
         file: new File(["hoge"], "rejected.txt", { type: "text/plain" }),
-        errorCode: "accept-violations",
+        rejectedCode: "accept-violations",
       },
     ])
   })

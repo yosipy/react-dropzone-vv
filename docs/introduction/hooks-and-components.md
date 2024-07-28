@@ -50,13 +50,13 @@ export type RejectedCode = "more-than-one-file" | "accept-violations"
 export type AcceptedClassifiedFile = {
   status: "accepted"
   file: File
-  errorCode: undefined
+  rejectedCode: undefined
 }
 
 export type RejectedClassifiedFile = {
   status: "rejected"
   file: File
-  errorCode: RejectedCode | string
+  rejectedCode: RejectedCode | string
 }
 
 export type ClassifiedFile = AcceptedClassifiedFile | RejectedClassifiedFile

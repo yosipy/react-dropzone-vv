@@ -75,7 +75,7 @@ export const classifyByAcceptability = (
       return {
         status: "rejected",
         file: file,
-        errorCode: "more-than-one-file",
+        rejectedCode: "more-than-one-file",
       }
     })
 
@@ -86,13 +86,13 @@ export const classifyByAcceptability = (
         classifiedFiles.push({
           status: "accepted",
           file: file,
-          errorCode: undefined,
+          rejectedCode: undefined,
         })
       } else {
         classifiedFiles.push({
           status: "rejected",
           file: file,
-          errorCode: "accept-violations",
+          rejectedCode: "accept-violations",
         })
       }
     }

@@ -68,7 +68,7 @@ export const Basic: FC = () => {
           <span key={index}>
             <li>{fileRejection.file.name}</li>
             <ul>
-              <li>{fileRejection.errorCode}</li>
+              <li>{fileRejection.rejectedCode}</li>
             </ul>
           </span>
         ))}

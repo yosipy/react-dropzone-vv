@@ -44,7 +44,7 @@ export const CustomValidation: FC = () => {
             const fileRejection: ClassifiedFile = {
               status: "rejected",
               file,
-              errorCode: "name-too-longer",
+              rejectedCode: "name-too-longer",
             }
             return fileRejection
           }
@@ -93,7 +93,7 @@ export const CustomValidation: FC = () => {
           <span key={index}>
             <li>{fileRejection.file.name}</li>
             <ul>
-              <li>{fileRejection.errorCode}</li>
+              <li>{fileRejection.rejectedCode}</li>
             </ul>
           </span>
         ))}
