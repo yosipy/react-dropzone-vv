@@ -21,7 +21,7 @@ features:
   - title: Lightweight
     details: Small package just to create drag-and-drop zones
     icon: 📃
-  - title: It's used in my application
+  - title: It's used in our application
     details: ImgRoller is a free website that allows you to resize and compress multiple images at once.
     icon:
       src: /imgroller.svg
