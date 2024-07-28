@@ -24,14 +24,11 @@ import { FC, useState } from "react"
 import { useReactDropzoneVV, ReactDropzoneVV } from "@lib/index"
 
 export const OpenProgrammatically: FC = () => {
-  const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
 
   const reactDropzoneVV = useReactDropzoneVV({
-    onSelect: async (classifiedFiles) => {
-      const tAcceptedFiles = classifiedFiles
-        .filter((classifiedFile) => classifiedFile.status == "accepted")
-        .map((classifiedFile) => classifiedFile.file)
-      setAcceptedFiles(tAcceptedFiles)
+    onSelect: async ({ acceptedFiles }) => {
+      setSelectedFiles(acceptedFiles)
     },
   })
 
@@ -57,8 +54,8 @@ export const OpenProgrammatically: FC = () => {
 
       <div>acceptedFiles</div>
       <ul>
-        {acceptedFiles.map((acceptedFile, index) => (
-          <li key={index}>{acceptedFile.name}</li>
+        {selectedFiles.map((selectedFile, index) => (
+          <li key={index}>{selectedFile.name}</li>
         ))}
       </ul>
     </section>
