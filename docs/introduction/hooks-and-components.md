@@ -53,17 +53,15 @@ export type AcceptedClassifiedFile = {
   errorCode: undefined
 }
 
-export type RejectedClassifiedFile<
-  CustonRejectedCode extends string = RejectedCode
-> = {
+export type RejectedClassifiedFile<T extends string = string> = {
   status: "rejected"
   file: File
-  errorCode: RejectedCode | CustonRejectedCode
+  errorCode: T
 }
 
-export type ClassifiedFile<CustonRejectedCode extends string = RejectedCode> =
+export type ClassifiedFile<T extends string = string> =
   | AcceptedClassifiedFile
-  | RejectedClassifiedFile<CustonRejectedCode>
+  | RejectedClassifiedFile<T>
 ```
 
 Please [click here](https://github.com/yosipy/react-dropzone-vv/blob/main/lib/types.ts) for the latest type definitions.

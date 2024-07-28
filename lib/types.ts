@@ -6,14 +6,12 @@ export type AcceptedClassifiedFile = {
   errorCode: undefined
 }
 
-export type RejectedClassifiedFile<
-  CustonRejectedCode extends string = RejectedCode
-> = {
+export type RejectedClassifiedFile<T extends string = string> = {
   status: "rejected"
   file: File
-  errorCode: RejectedCode | CustonRejectedCode
+  errorCode: T
 }
 
-export type ClassifiedFile<CustonRejectedCode extends string = RejectedCode> =
+export type ClassifiedFile<T extends string = string> =
   | AcceptedClassifiedFile
-  | RejectedClassifiedFile<CustonRejectedCode>
+  | RejectedClassifiedFile<T>
