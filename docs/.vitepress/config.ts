@@ -42,6 +42,10 @@ export default defineConfig({
             text: "Opening File Dialog Programmatically",
             link: "/examples/opening-file-dialog-programmatically",
           },
+          {
+            text: "Custom validation",
+            link: "/examples/custom-validation",
+          },
         ],
       },
     ],

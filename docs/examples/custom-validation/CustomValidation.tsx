@@ -3,18 +3,42 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
+  ClassifiedFile,
 } from "@lib/index"
 
-export const Basic: FC = () => {
+export const CustomValidation: FC = () => {
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
   const [fileRejections, setFileRejections] = useState<
     RejectedClassifiedFile[]
   >([])
 
   const reactDropzoneVV = useReactDropzoneVV({
-    onSelect: async (props) => {
-      setAcceptedFiles(props.acceptedFiles)
-      setFileRejections(props.fileRejections)
+    onSelect: async ({ classifiedFiles }) => {
+      const maxLength = 20
+      const customClassifiedFiles = classifiedFiles.map((classifiedFile) => {
+        if (classifiedFile.status == "accepted") {
+          const file = classifiedFile.file
+          if (file.name.length > maxLength) {
+            const fileRejection: ClassifiedFile = {
+              status: "rejected",
+              file,
+              rejectedCode: "name-too-longer",
+            }
+            return fileRejection
+          }
+        }
+        return classifiedFile
+      })
+
+      const tAcceptedFiles = customClassifiedFiles
+        .filter((classifiedFile) => classifiedFile.status == "accepted")
+        .map((classifiedFile) => classifiedFile.file)
+      const tFileRejections = customClassifiedFiles.filter(
+        (classifiedFile) => classifiedFile.status == "rejected"
+      )
+
+      setAcceptedFiles(tAcceptedFiles)
+      setFileRejections(tFileRejections)
     },
     onError: (e) => {
       console.log(e)
@@ -32,6 +56,7 @@ export const Basic: FC = () => {
         }}
       >
         <p>Drag & drop some files here, or click to select files</p>
+        <p>{"(Allowed if the file name' length is 20 or less)"}</p>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>

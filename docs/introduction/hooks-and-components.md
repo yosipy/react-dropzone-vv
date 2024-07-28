@@ -42,7 +42,7 @@ The fileRejections contains the reason for the rejection.
 classifiedFiles is an array containing both acceptedFiles and fileRejections.
 classifiedFiles is useful, for example, for adding your own custom validations.
 
-ClassifiedFile type is defined as follows:
+Simplified ClassifiedFile type is defined as follows:
 
 ```ts
 export type RejectedCode = "more-than-one-file" | "accept-violations"
@@ -50,25 +50,22 @@ export type RejectedCode = "more-than-one-file" | "accept-violations"
 export type AcceptedClassifiedFile = {
   status: "accepted"
   file: File
-  errorCode: undefined
+  rejectedCode: undefined
 }
 
-export type RejectedClassifiedFile<
-  CustonRejectedCode extends string = RejectedCode
-> = {
+export type RejectedClassifiedFile = {
   status: "rejected"
   file: File
-  errorCode: RejectedCode | CustonRejectedCode
+  rejectedCode: RejectedCode | string
 }
 
-export type ClassifiedFile<CustonRejectedCode extends string = RejectedCode> =
-  | AcceptedClassifiedFile
-  | RejectedClassifiedFile<CustonRejectedCode>
+export type ClassifiedFile = AcceptedClassifiedFile | RejectedClassifiedFile
 ```
 
-Please [click here](https://github.com/yosipy/react-dropzone-vv/blob/main/lib/types.ts) for the latest type definitions.
-ClassifiedFile is classified as “accepted” or “rejected” depending on its status.
+ClassifiedFile is classified as "accepted" or "rejected" depending on its status.
 How to split an array by status can be seen in the example.
+
+Note that the RejectedCode may increase.
 
 ## ReactDropzoneVV
 

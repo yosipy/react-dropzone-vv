@@ -3,17 +3,15 @@ export type RejectedCode = "more-than-one-file" | "accept-violations"
 export type AcceptedClassifiedFile = {
   status: "accepted"
   file: File
-  errorCode: undefined
+  rejectedCode: undefined
 }
 
-export type RejectedClassifiedFile<
-  CustonRejectedCode extends string = RejectedCode
-> = {
+export type RejectedClassifiedFile<T extends string = string> = {
   status: "rejected"
   file: File
-  errorCode: RejectedCode | CustonRejectedCode
+  rejectedCode: T
 }
 
-export type ClassifiedFile<CustonRejectedCode extends string = RejectedCode> =
+export type ClassifiedFile<T extends string = string> =
   | AcceptedClassifiedFile
-  | RejectedClassifiedFile<CustonRejectedCode>
+  | RejectedClassifiedFile<T>

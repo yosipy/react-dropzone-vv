@@ -1,4 +1,4 @@
-import type { ClassifiedFile } from "./types"
+import type { ClassifiedFile, RejectedCode } from "./types"
 
 export const ensureError = (error: unknown): Error => {
   if (error instanceof Error) {
@@ -68,14 +68,14 @@ export const classifyByAcceptability = (
     multiple: boolean
   }
 ) => {
-  let classifiedFiles: ClassifiedFile[] = []
+  let classifiedFiles: ClassifiedFile<RejectedCode>[] = []
 
   if (options.multiple == false && files.length > 1) {
     classifiedFiles = Array.from(files, (file) => {
       return {
         status: "rejected",
         file: file,
-        errorCode: "more-than-one-file",
+        rejectedCode: "more-than-one-file",
       }
     })
 
@@ -86,13 +86,13 @@ export const classifyByAcceptability = (
         classifiedFiles.push({
           status: "accepted",
           file: file,
-          errorCode: undefined,
+          rejectedCode: undefined,
         })
       } else {
         classifiedFiles.push({
           status: "rejected",
           file: file,
-          errorCode: "accept-violations",
+          rejectedCode: "accept-violations",
         })
       }
     }

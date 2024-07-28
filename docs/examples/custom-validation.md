@@ -1,4 +1,4 @@
-# Basic Example
+# Custom validation
 
 ## demo
 
@@ -8,12 +8,12 @@
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ref, onMounted } from 'vue'
-import { Basic } from './basic-example/Basic'
+import { CustomValidation } from './custom-validation/CustomValidation'
 
 const el = ref()
 onMounted(() => {
   const root = createRoot(el.value)
-  root.render(createElement(Basic, {}, null))
+  root.render(createElement(CustomValidation, {}, null))
 })
 </script>
 
@@ -25,18 +25,42 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
-} from "react-dropzone-vv"
+  ClassifiedFile,
+} from "@lib/index"
 
-export const Basic: FC = () => {
+export const CustomValidation: FC = () => {
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
   const [fileRejections, setFileRejections] = useState<
     RejectedClassifiedFile[]
   >([])
 
   const reactDropzoneVV = useReactDropzoneVV({
-    onSelect: async (props) => {
-      setAcceptedFiles(props.acceptedFiles)
-      setFileRejections(props.fileRejections)
+    onSelect: async ({ classifiedFiles }) => {
+      const maxLength = 20
+      const customClassifiedFiles = classifiedFiles.map((classifiedFile) => {
+        if (classifiedFile.status == "accepted") {
+          const file = classifiedFile.file
+          if (file.name.length > maxLength) {
+            const fileRejection: ClassifiedFile = {
+              status: "rejected",
+              file,
+              rejectedCode: "name-too-longer",
+            }
+            return fileRejection
+          }
+        }
+        return classifiedFile
+      })
+
+      const tAcceptedFiles = customClassifiedFiles
+        .filter((classifiedFile) => classifiedFile.status == "accepted")
+        .map((classifiedFile) => classifiedFile.file)
+      const tFileRejections = customClassifiedFiles.filter(
+        (classifiedFile) => classifiedFile.status == "rejected"
+      )
+
+      setAcceptedFiles(tAcceptedFiles)
+      setFileRejections(tFileRejections)
     },
     onError: (e) => {
       console.log(e)
@@ -54,6 +78,7 @@ export const Basic: FC = () => {
         }}
       >
         <p>Drag & drop some files here, or click to select files</p>
+        <p>{"(Allowed if the file name' length is 20 or less)"}</p>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>
