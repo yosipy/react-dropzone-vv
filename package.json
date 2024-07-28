@@ -4,7 +4,7 @@
   "author": {
     "name": "yosipy"
   },
-  "version": "0.1.4",
+  "version": "0.1.5",
   "keywords": [
     "dropzone",
     "drag and drop",
@@ -35,13 +35,13 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "docs:dev": "vitepress dev docs --host 0.0.0.0",
+    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "17.x || 18.x",
+    "react-dom": "17.x || 18.x"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
