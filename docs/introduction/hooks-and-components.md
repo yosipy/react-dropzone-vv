@@ -82,6 +82,7 @@ How to split an array by status can be seen in the example.
   }}
 >
   <p>Drag & drop some files here, or click to select files</p>
+  <p>{'(Allowed mime type is "image/*"")'}</p>
 </ReactDropzoneVV>
 ```
 

@@ -33,7 +33,7 @@ export const Introduction: FC = () => {
         }}
       >
         <p>Drag & drop some files here, or click to select files</p>
-        <p>{"(meme type: 'image/*')"}</p>
+        <p>{'(Allowed mime type is "image/*"")'}</p>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>

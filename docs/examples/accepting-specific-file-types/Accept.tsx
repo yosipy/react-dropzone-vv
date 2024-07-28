@@ -30,6 +30,9 @@ export const Accept: FC = () => {
         }}
       >
         <p>Drag & drop some files here, or click to select files</p>
+        <p>
+          {'(Allowed mime type is "image/png", or file extention is ".webp")'}
+        </p>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>
