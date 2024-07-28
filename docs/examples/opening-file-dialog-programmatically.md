@@ -21,7 +21,7 @@ onMounted(() => {
 
 ```tsx
 import { FC, useState } from "react"
-import { useReactDropzoneVV, ReactDropzoneVV } from "@lib/index"
+import { useReactDropzoneVV, ReactDropzoneVV } from "react-dropzone-vv"
 
 export const OpenProgrammatically: FC = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])

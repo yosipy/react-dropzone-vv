@@ -25,7 +25,7 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
-} from "@lib/index"
+} from "react-dropzone-vv"
 
 export const Basic: FC = () => {
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
