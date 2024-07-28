@@ -5,6 +5,16 @@
     "name": "yosipy"
   },
   "version": "0.1.0",
+  "keywords": [
+    "dropzone",
+    "drag and drop",
+    "react",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yosipy/react-dropzone-vv"
+  },
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
