@@ -14,15 +14,15 @@ export const ensureError = (error: unknown): Error => {
 }
 
 export const splitAccept = (accept: string) => {
-  const memeTypesAndExtensions = accept.split(",")
+  const mimeTypesAndExtensions = accept.split(",")
   const mimeTypes = []
   const extensions = []
 
-  for (const memeTypesAndExtension of memeTypesAndExtensions) {
-    if (memeTypesAndExtension.includes("/")) {
-      mimeTypes.push(memeTypesAndExtension)
-    } else if (memeTypesAndExtension.startsWith(".")) {
-      extensions.push(memeTypesAndExtension)
+  for (const mimeTypesAndExtension of mimeTypesAndExtensions) {
+    if (mimeTypesAndExtension.includes("/")) {
+      mimeTypes.push(mimeTypesAndExtension)
+    } else if (mimeTypesAndExtension.startsWith(".")) {
+      extensions.push(mimeTypesAndExtension)
     } else {
       throw `'accept' is invalid: ${accept}`
     }

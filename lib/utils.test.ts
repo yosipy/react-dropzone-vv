@@ -126,13 +126,13 @@ describe("isAcceptedFile", () => {
   })
 
   describe("If accept is not empty text", () => {
-    describe("If accept is same meme type of file", () => {
+    describe("If accept is same mime type of file", () => {
       test("Should return true", () => {
         expect(isAcceptedFile(textFile, "text/plain")).toBe(true)
       })
     })
 
-    describe("If accept is different meme type of file", () => {
+    describe("If accept is different mime type of file", () => {
       test("Should return false", () => {
         expect(isAcceptedFile(textFile, "text/javascript")).toBe(false)
       })
