@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import type { ClassifiedFile } from "./types"
+import type { ClassifiedFile, RejectedClassifiedFile } from "./types"
 
 export type UseReactDropzoneVVProps = {
   accept?: string
@@ -7,7 +7,11 @@ export type UseReactDropzoneVVProps = {
   disabledDropOnDocment?: boolean
   multiple?: boolean
   onDrop?: (files: File[]) => void
-  onSelect?: (classifiedFiles: ClassifiedFile[]) => void
+  onSelect?: (props: {
+    acceptedFiles: File[]
+    fileRejections: RejectedClassifiedFile[]
+    classifiedFiles: ClassifiedFile[]
+  }) => void
   onError?: (error: Error) => void
 }
 
@@ -25,7 +29,11 @@ export type UseReactDropzoneVV = {
   inputRef: React.RefObject<HTMLInputElement>
   open: () => void
   onDrop?: (files: File[]) => void
-  onSelect?: (classifiedFiles: ClassifiedFile[]) => void
+  onSelect?: (props: {
+    acceptedFiles: File[]
+    fileRejections: RejectedClassifiedFile[]
+    classifiedFiles: ClassifiedFile[]
+  }) => void
   onError?: (error: Error) => void
 }
 
@@ -41,7 +49,7 @@ export const useReactDropzoneVV = ({
   const [accept, setAccept] = useState<string>(tAccept)
   const [disabled, setDisabled] = useState<boolean>(tDisabled)
   const [disabledDropOnDocment, setDisabledDropOnDocment] = useState<boolean>(
-    tDisabledDropOnDocment,
+    tDisabledDropOnDocment
   )
   const [multiple, setMultiple] = useState<boolean>(tMultiple)
 

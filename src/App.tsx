@@ -5,7 +5,7 @@ const App: FC = () => {
   const reactDropzoneVV = useReactDropzoneVV({
     accept: ".png,.jpg,.jpeg,.webp",
     disabledDropOnDocment: true,
-    onSelect: async (classifiedFiles) => {
+    onSelect: async ({ classifiedFiles }) => {
       const acceptedFiles = classifiedFiles
         .filter((classifiedFile) => classifiedFile.status == "accepted")
         .map((classifiedFile) => classifiedFile.file)

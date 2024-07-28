@@ -100,3 +100,14 @@ export const classifyByAcceptability = (
     return classifiedFiles
   }
 }
+
+export const splitClassifiedFiles = (classifiedFiles: ClassifiedFile[]) => {
+  const acceptedFiles = classifiedFiles
+    .filter((classifiedFile) => classifiedFile.status == "accepted")
+    .map((classifiedFile) => classifiedFile.file)
+  const fileRejections = classifiedFiles.filter(
+    (classifiedFile) => classifiedFile.status == "rejected"
+  )
+
+  return { acceptedFiles, fileRejections }
+}
