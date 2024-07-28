@@ -25,7 +25,7 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
-} from "@lib/index"
+} from "react-dropzone-vv"
 
 export const Basic: FC = () => {
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
@@ -34,15 +34,9 @@ export const Basic: FC = () => {
   >([])
 
   const reactDropzoneVV = useReactDropzoneVV({
-    onSelect: async (classifiedFiles) => {
-      const tAcceptedFiles = classifiedFiles
-        .filter((classifiedFile) => classifiedFile.status == "accepted")
-        .map((classifiedFile) => classifiedFile.file)
-      const tFileRejections = classifiedFiles.filter(
-        (classifiedFile) => classifiedFile.status == "rejected"
-      )
-      setAcceptedFiles(tAcceptedFiles)
-      setFileRejections(tFileRejections)
+    onSelect: async (props) => {
+      setAcceptedFiles(props.acceptedFiles)
+      setFileRejections(props.fileRejections)
     },
     onError: (e) => {
       console.log(e)

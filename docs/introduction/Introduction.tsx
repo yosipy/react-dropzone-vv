@@ -13,15 +13,9 @@ export const Introduction: FC = () => {
 
   const reactDropzoneVV = useReactDropzoneVV({
     accept: "image/*",
-    onSelect: async (classifiedFiles) => {
-      const tAcceptedFiles = classifiedFiles
-        .filter((classifiedFile) => classifiedFile.status == "accepted")
-        .map((classifiedFile) => classifiedFile.file)
-      const tFileRejections = classifiedFiles.filter(
-        (classifiedFile) => classifiedFile.status == "rejected"
-      )
-      setAcceptedFiles(tAcceptedFiles)
-      setFileRejections(tFileRejections)
+    onSelect: async (props) => {
+      setAcceptedFiles(props.acceptedFiles)
+      setFileRejections(props.fileRejections)
     },
     onError: (e) => {
       console.log(e)
@@ -39,7 +33,7 @@ export const Introduction: FC = () => {
         }}
       >
         <p>Drag & drop some files here, or click to select files</p>
-        <p>{"(meme type: 'image/*')"}</p>
+        <p>{'(Allowed mime type is "image/*"")'}</p>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>

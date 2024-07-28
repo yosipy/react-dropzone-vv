@@ -1,7 +1,11 @@
 import type { FC, HTMLProps, ReactNode } from "react"
 import { useCallback, useEffect } from "react"
 import type { UseReactDropzoneVV } from "./useReactDropzoneVV"
-import { classifyByAcceptability, ensureError } from "./utils"
+import {
+  classifyByAcceptability,
+  ensureError,
+  splitClassifiedFiles,
+} from "./utils"
 
 export type ReactDropzoneVVProps = HTMLProps<HTMLDivElement> & {
   reactDropzoneVV: UseReactDropzoneVV
@@ -63,7 +67,14 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
           accept: reactDropzoneVV.accept,
           multiple: reactDropzoneVV.multiple,
         })
-        if (reactDropzoneVV.onSelect) reactDropzoneVV.onSelect(classifiedFiles)
+        const { acceptedFiles, fileRejections } =
+          splitClassifiedFiles(classifiedFiles)
+        if (reactDropzoneVV.onSelect)
+          reactDropzoneVV.onSelect({
+            acceptedFiles,
+            fileRejections,
+            classifiedFiles,
+          })
       } catch (error) {
         if (reactDropzoneVV.onError) reactDropzoneVV.onError(ensureError(error))
       }
@@ -89,8 +100,14 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
             accept: reactDropzoneVV.accept,
             multiple: reactDropzoneVV.multiple,
           })
+          const { acceptedFiles, fileRejections } =
+            splitClassifiedFiles(classifiedFiles)
           if (reactDropzoneVV.onSelect)
-            reactDropzoneVV.onSelect(classifiedFiles)
+            reactDropzoneVV.onSelect({
+              acceptedFiles,
+              fileRejections,
+              classifiedFiles,
+            })
         }
         event.target.value = ""
       } catch (error) {

@@ -25,7 +25,7 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
-} from "@lib/index"
+} from "react-dropzone-vv"
 
 export const Accept: FC = () => {
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
@@ -35,15 +35,9 @@ export const Accept: FC = () => {
 
   const reactDropzoneVV = useReactDropzoneVV({
     accept: "image/png,.webp",
-    onSelect: async (classifiedFiles) => {
-      const tAcceptedFiles = classifiedFiles
-        .filter((classifiedFile) => classifiedFile.status == "accepted")
-        .map((classifiedFile) => classifiedFile.file)
-      const tFileRejections = classifiedFiles.filter(
-        (classifiedFile) => classifiedFile.status == "rejected"
-      )
-      setAcceptedFiles(tAcceptedFiles)
-      setFileRejections(tFileRejections)
+    onSelect: async (props) => {
+      setAcceptedFiles(props.acceptedFiles)
+      setFileRejections(props.fileRejections)
     },
   })
 
@@ -58,6 +52,9 @@ export const Accept: FC = () => {
         }}
       >
         <p>Drag & drop some files here, or click to select files</p>
+        <p>
+          {'(Allowed mime type is "image/png", or file extention is ".webp")'}
+        </p>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest"
+import { beforeEach, describe, expect, test } from "vitest"
 
 import {
   ensureError,
@@ -7,7 +7,9 @@ import {
   isMimeTypeMatch,
   isAcceptedFile,
   classifyByAcceptability,
+  splitClassifiedFiles,
 } from "./utils"
+import { ClassifiedFile } from "./types"
 
 describe("ensureError", () => {
   describe("If error type is Error", () => {
@@ -124,13 +126,13 @@ describe("isAcceptedFile", () => {
   })
 
   describe("If accept is not empty text", () => {
-    describe("If accept is same meme type of file", () => {
+    describe("If accept is same mime type of file", () => {
       test("Should return true", () => {
         expect(isAcceptedFile(textFile, "text/plain")).toBe(true)
       })
     })
 
-    describe("If accept is different meme type of file", () => {
+    describe("If accept is different mime type of file", () => {
       test("Should return false", () => {
         expect(isAcceptedFile(textFile, "text/javascript")).toBe(false)
       })
@@ -231,5 +233,51 @@ describe("classifyByAcceptability", () => {
         ])
       })
     })
+  })
+})
+
+describe("splitClassifiedFiles", () => {
+  let classifiedFiles: ClassifiedFile[] = []
+  beforeEach(() => {
+    classifiedFiles = [
+      {
+        status: "accepted",
+        file: new File(["hoge"], "accepted1.txt", { type: "text/plain" }),
+        errorCode: undefined,
+      },
+      {
+        status: "accepted",
+        file: new File(["hoge"], "accepted2.txt", { type: "text/plain" }),
+        errorCode: undefined,
+      },
+      {
+        status: "rejected",
+        file: new File(["hoge"], "rejected.txt", { type: "text/plain" }),
+        errorCode: "accept-violations",
+      },
+    ]
+  })
+
+  test("Should return acceptedFiles and fileRejections", () => {
+    const { acceptedFiles, fileRejections } =
+      splitClassifiedFiles(classifiedFiles)
+
+    expect(acceptedFiles).toStrictEqual([
+      new File(["hoge"], "accepted1.txt", { type: "text/plain" }),
+      new File(["hoge"], "accepted2.txt", { type: "text/plain" }),
+    ])
+    expect(fileRejections).toStrictEqual([
+      {
+        status: "rejected",
+        file: new File(["hoge"], "rejected.txt", { type: "text/plain" }),
+        errorCode: "accept-violations",
+      },
+    ])
+  })
+
+  test("Should not changed classifiedFiles", () => {
+    splitClassifiedFiles(classifiedFiles)
+
+    expect(classifiedFiles.length).toBe(3)
   })
 })
