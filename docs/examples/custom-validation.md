@@ -26,7 +26,7 @@ import {
   ReactDropzoneVV,
   RejectedClassifiedFile,
   ClassifiedFile,
-} from "@lib/index"
+} from "react-dropzone-vv"
 
 export const CustomValidation: FC = () => {
   const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
