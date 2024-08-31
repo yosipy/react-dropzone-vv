@@ -79,7 +79,7 @@ Note that the RejectedCode may increase.
   }}
 >
   <p>Drag & drop some files here, or click to select files</p>
-  <p>{'(Allowed mime type is "image/*"")'}</p>
+  <p>{'(Allowed mime type is "image/*")'}</p>
 </ReactDropzoneVV>
 ```
 
