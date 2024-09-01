@@ -4,7 +4,6 @@ import { useReactDropzoneVV, ReactDropzoneVV, OnSelectProps } from "@lib/index"
 const App: FC = () => {
   const reactDropzoneVV = useReactDropzoneVV({
     accept: ".png,.jpg,.jpeg,.webp",
-    disabledDropOnDocment: true,
   })
 
   const handleSelect = ({ classifiedFiles }: OnSelectProps) => {

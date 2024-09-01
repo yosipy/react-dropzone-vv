@@ -1,5 +1,5 @@
 import type { FC, HTMLProps, ReactNode } from "react"
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import type { UseReactDropzoneVV } from "./useReactDropzoneVV"
 import {
   classifyByAcceptability,
@@ -31,7 +31,6 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
   reactDropzoneVV: {
     accept,
     disabled,
-    disabledDropOnDocment,
     multiple,
     setIsDragging,
     isDragging,
@@ -140,25 +139,6 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     },
     [accept, multiple, onSelect, onError]
   )
-
-  useEffect(() => {
-    const handleDocumentDrop = (event: DragEvent) => {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-
-    if (disabledDropOnDocment) {
-      document.addEventListener("dragover", handleDocumentDrop)
-      document.addEventListener("drop", handleDocumentDrop)
-    }
-
-    return () => {
-      if (disabledDropOnDocment) {
-        document.removeEventListener("dragover", handleDocumentDrop)
-        document.removeEventListener("drop", handleDocumentDrop)
-      }
-    }
-  }, [disabledDropOnDocment])
 
   return (
     <div
