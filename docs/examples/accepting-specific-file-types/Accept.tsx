@@ -23,18 +23,21 @@ export const Accept: FC = () => {
     <section style={{ border: "solid", padding: "1rem" }}>
       <ReactDropzoneVV
         reactDropzoneVV={reactDropzoneVV}
-        style={{
-          padding: "2rem",
-          border: "dashed",
-          backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
-        }}
         accept="image/png,.webp"
         onSelect={handleSelect}
       >
-        <p>Drag & drop some files here, or click to select files</p>
-        <p>
-          {'(Allowed mime type is "image/png", or file extention is ".webp")'}
-        </p>
+        <div
+          style={{
+            padding: "2rem",
+            border: "dashed",
+            backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
+          }}
+        >
+          <p>Drag & drop some files here, or click to select files</p>
+          <p>
+            {'(Allowed mime type is "image/png", or file extention is ".webp")'}
+          </p>
+        </div>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>

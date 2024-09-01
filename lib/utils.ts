@@ -24,7 +24,7 @@ export const splitAccept = (accept: string) => {
     } else if (mimeTypesAndExtension.startsWith(".")) {
       extensions.push(mimeTypesAndExtension)
     } else {
-      throw `'accept' is invalid: ${accept}`
+      throw new Error(`'accept' is invalid: ${accept}`)
     }
   }
 

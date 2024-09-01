@@ -26,17 +26,19 @@ export const Basic: FC = () => {
   return (
     <section style={{ border: "solid", padding: "1rem" }}>
       <ReactDropzoneVV
-        multiple={true}
         reactDropzoneVV={reactDropzoneVV}
-        style={{
-          padding: "2rem",
-          border: "dashed",
-          backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
-        }}
         onSelect={handleSelect}
         onError={hendleError}
       >
-        <p>Drag & drop some files here, or click to select files</p>
+        <div
+          style={{
+            padding: "2rem",
+            border: "dashed",
+            backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
+          }}
+        >
+          <p>Drag & drop some files here, or click to select files</p>
+        </div>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>

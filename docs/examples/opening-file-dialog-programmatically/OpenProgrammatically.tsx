@@ -14,14 +14,17 @@ export const OpenProgrammatically: FC = () => {
     <section style={{ border: "solid", padding: "1rem" }}>
       <ReactDropzoneVV
         reactDropzoneVV={reactDropzoneVV}
-        style={{
-          padding: "2rem",
-          border: "dashed",
-          backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
-        }}
         onSelect={handleSelect}
       >
-        <p>Drag & drop some files here, or click to select files</p>
+        <div
+          style={{
+            padding: "2rem",
+            border: "dashed",
+            backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
+          }}
+        >
+          <p>Drag & drop some files here, or click to select files</p>
+        </div>
       </ReactDropzoneVV>
 
       <button

@@ -1,4 +1,5 @@
 export * from "./ReactDropzoneVV"
+export * from "./DisableOutOfFileDropzoneZone"
 export * from "./useReactDropzoneVV"
 export * from "./utils"
 export * from "./types"
