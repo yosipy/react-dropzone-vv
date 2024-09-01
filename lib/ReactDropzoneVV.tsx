@@ -154,7 +154,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         style={{ display: "none" }}
         type="file"
         {...inputProps}
-        onChange={handleChangeInput}
+        onChange={disabled ? undefined : handleChangeInput}
       />
       {children}
     </div>
