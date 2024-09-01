@@ -27,17 +27,20 @@ export const Introduction: FC = () => {
     <section style={{ border: "solid", padding: "1rem" }}>
       <ReactDropzoneVV
         reactDropzoneVV={reactDropzoneVV}
-        style={{
-          padding: "2rem",
-          border: "dashed",
-          backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
-        }}
         accept="image/*"
         onSelect={handleSelect}
         onError={handleError}
       >
-        <p>Drag & drop some files here, or click to select files</p>
-        <p>{'(Allowed mime type is "image/*"")'}</p>
+        <div
+          style={{
+            padding: "2rem",
+            border: "dashed",
+            backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
+          }}
+        >
+          <p>Drag & drop some files here, or click to select files</p>
+          <p>{'(Allowed mime type is "image/*"")'}</p>
+        </div>
       </ReactDropzoneVV>
 
       <div>acceptedFiles</div>
