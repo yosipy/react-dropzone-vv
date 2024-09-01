@@ -14,7 +14,19 @@ export type ReactDropzoneVVProps = HTMLProps<HTMLDivElement> & {
 }
 
 export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
-  reactDropzoneVV: { setIsDragging, ...reactDropzoneVV },
+  reactDropzoneVV: {
+    accept,
+    disabled,
+    disabledDropOnDocment,
+    multiple,
+    setIsDragging,
+    isDragging,
+    inputRef,
+    onDrop,
+    onSelect,
+    onError,
+    ...reactDropzoneVV
+  },
   inputProps,
   children,
   ...props
@@ -43,17 +55,12 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
-      if (!reactDropzoneVV.isDragging) {
+      if (!isDragging) {
         setIsDragging(true)
       }
     },
-    [reactDropzoneVV.isDragging, setIsDragging]
+    [isDragging, setIsDragging]
   )
-
-  const dependenciesForDivideByAcceptability = [
-    reactDropzoneVV.accept,
-    reactDropzoneVV.multiple,
-  ]
 
   const onDropDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
@@ -64,31 +71,28 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
 
         const files = Array.from(event.dataTransfer.files)
 
-        if (reactDropzoneVV.onDrop) reactDropzoneVV.onDrop(files)
+        if (onDrop) {
+          onDrop(files)
+        }
         const classifiedFiles = classifyByAcceptability(files, {
-          accept: reactDropzoneVV.accept,
-          multiple: reactDropzoneVV.multiple,
+          accept: accept,
+          multiple: multiple,
         })
         const { acceptedFiles, fileRejections } =
           splitClassifiedFiles(classifiedFiles)
-        if (reactDropzoneVV.onSelect)
-          reactDropzoneVV.onSelect({
+        if (onSelect)
+          onSelect({
             acceptedFiles,
             fileRejections,
             classifiedFiles,
           })
       } catch (error) {
-        if (reactDropzoneVV.onError) {
-          reactDropzoneVV.onError(ensureError(error))
+        if (onError) {
+          onError(ensureError(error))
         }
       }
     },
-    [
-      ...dependenciesForDivideByAcceptability,
-      setIsDragging,
-      reactDropzoneVV.onDrop,
-      reactDropzoneVV.onSelect,
-    ]
+    [accept, multiple, setIsDragging, onDrop, onSelect, onError]
   )
 
   const onClickDiv = () => {
@@ -101,13 +105,13 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         const files = Array.from(event.target.files || [])
         if (files.length > 0) {
           const classifiedFiles = classifyByAcceptability(files, {
-            accept: reactDropzoneVV.accept,
-            multiple: reactDropzoneVV.multiple,
+            accept: accept,
+            multiple: multiple,
           })
           const { acceptedFiles, fileRejections } =
             splitClassifiedFiles(classifiedFiles)
-          if (reactDropzoneVV.onSelect)
-            reactDropzoneVV.onSelect({
+          if (onSelect)
+            onSelect({
               acceptedFiles,
               fileRejections,
               classifiedFiles,
@@ -115,12 +119,12 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         }
         event.target.value = ""
       } catch (error) {
-        if (reactDropzoneVV.onError) {
-          reactDropzoneVV.onError(ensureError(error))
+        if (onError) {
+          onError(ensureError(error))
         }
       }
     },
-    [...dependenciesForDivideByAcceptability, reactDropzoneVV.onSelect]
+    [accept, multiple, onSelect, onError]
   )
 
   useEffect(() => {
@@ -129,33 +133,33 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       event.stopPropagation()
     }
 
-    if (reactDropzoneVV.disabledDropOnDocment) {
+    if (disabledDropOnDocment) {
       document.addEventListener("dragover", handleDocumentDrop)
       document.addEventListener("drop", handleDocumentDrop)
     }
 
     return () => {
-      if (reactDropzoneVV.disabledDropOnDocment) {
+      if (disabledDropOnDocment) {
         document.removeEventListener("dragover", handleDocumentDrop)
         document.removeEventListener("drop", handleDocumentDrop)
       }
     }
-  }, [reactDropzoneVV.disabledDropOnDocment])
+  }, [disabledDropOnDocment])
 
   return (
     <div
       {...props}
-      onDragEnter={reactDropzoneVV.disabled ? undefined : onDragEnterDiv}
-      onDragLeave={reactDropzoneVV.disabled ? undefined : onDragLeaveDiv}
-      onDragOver={reactDropzoneVV.disabled ? undefined : onDragOverDiv}
-      onDrop={reactDropzoneVV.disabled ? undefined : onDropDiv}
-      onClick={reactDropzoneVV.disabled ? undefined : onClickDiv}
+      onDragEnter={disabled ? undefined : onDragEnterDiv}
+      onDragLeave={disabled ? undefined : onDragLeaveDiv}
+      onDragOver={disabled ? undefined : onDragOverDiv}
+      onDrop={disabled ? undefined : onDropDiv}
+      onClick={disabled ? undefined : onClickDiv}
     >
       <input
-        accept={reactDropzoneVV.accept}
-        disabled={reactDropzoneVV.disabled}
-        multiple={reactDropzoneVV.multiple}
-        ref={reactDropzoneVV.inputRef}
+        accept={accept}
+        disabled={disabled}
+        multiple={multiple}
+        ref={inputRef}
         style={{ display: "none" }}
         type="file"
         {...inputProps}
