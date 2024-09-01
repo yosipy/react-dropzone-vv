@@ -2,35 +2,29 @@
 
 ## useReactDropzoneVV
 
-```tsx
-export const Introduction: FC = () => {
-  const [acceptedFiles, setAcceptedFiles] = useState<File[]>([])
-  const [fileRejections, setFileRejections] = useState<
-    RejectedClassifiedFile[]
-  >([])
+### Return values
 
-  const reactDropzoneVV = useReactDropzoneVV({
-    accept: "image/*",
-    onSelect: async (props) => {
-      setAcceptedFiles(props.acceptedFiles)
-      setFileRejections(props.fileRejections)
-    },
-    onError: (e) => {
-      console.log(e)
-    },
-  })
-```
+| name         | Type                               |
+| ------------ | ---------------------------------- |
+| isDragging   | boolean                            |
+| inputRef     | React.RefObject<HTMLInputElement\> |
+| openSelector | () => void                         |
+
+## ReactDropzoneVV
 
 ### PROPS & METHODS
 
-| Prop name | Type                                                                                                                    | Default | Description                                                                                                                                                                                                                                                                                                                                                                                              |
-| --------- | ----------------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| accept    | string                                                                                                                  | ""      | [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept) states the following: The accept attribute takes as its value a comma-separated list of one or more file types, or [unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept#unique_file_type_specifiers), describing which file types to allow. ex: `"audio/*,image/webp,.jpg,.pdf"` |
-| disabled  | boolean                                                                                                                 | false   |                                                                                                                                                                                                                                                                                                                                                                                                          |
-| multiple  | boolean                                                                                                                 | true    |                                                                                                                                                                                                                                                                                                                                                                                                          |
-| onDrop    | (files: File[]) => void                                                                                                 |         | Callback when Drop event occurs.                                                                                                                                                                                                                                                                                                                                                                         |
-| onSelect  | (props: { acceptedFiles: File[], fileRejections: RejectedClassifiedFile[], classifiedFiles: ClassifiedFile[] }) => void |         | Callbacks when the Drop event occurs and when a file is selected in a dialog.                                                                                                                                                                                                                                                                                                                            |
-| onError   | (error: Error) => void                                                                                                  |         |                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Prop name       | Type                           | Default | Description                                                                   |
+| --------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------- |
+| children        | ReactNode                      |         |                                                                               |
+| reactDropzoneVV | UseReactDropzoneVV             |         | The return value of useReactDropzoneVV.                                       |
+| inputProps      | HTMLProps<HTMLInputElement\>   |         |                                                                               |
+| accept          | string                         | ""      |                                                                               |
+| disabled        | boolean                        | false   |                                                                               |
+| multiple        | boolean                        | true    |                                                                               |
+| onDrop          | (files: File[]) => void        |         |                                                                               |
+| onSelect        | (props: OnSelectProps) => void |         | Callbacks when the Drop event occurs and when a file is selected in a dialog. |
+| onError         | (error: Error) => void         |         |                                                                               |
 
 ### Supplement onSelect
 
@@ -64,28 +58,4 @@ export type ClassifiedFile = AcceptedClassifiedFile | RejectedClassifiedFile
 ClassifiedFile is classified as "accepted" or "rejected" depending on its status.
 How to split an array by status can be seen in the example.
 
-Note that the RejectedCode may increase.
-
-## ReactDropzoneVV
-
-```tsx
-<ReactDropzoneVV
-  reactDropzoneVV={reactDropzoneVV}
-  style={{
-    padding: "2rem",
-    border: "dashed",
-    backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
-  }}
->
-  <p>Drag & drop some files here, or click to select files</p>
-  <p>{'(Allowed mime type is "image/*")'}</p>
-</ReactDropzoneVV>
-```
-
-### PROPS & METHODS
-
-| Prop name       | Type                          | Default | Description                             |
-| --------------- | ----------------------------- | ------- | --------------------------------------- |
-| reactDropzoneVV | UseReactDropzoneVV            |         | The return value of useReactDropzoneVV. |
-| inputProps      | HTMLProps\<HTMLInputElement\> |         |                                         |
-| children        | ReactNode                     |         |                                         |
+Note that the update may increase the RejectedCode.
