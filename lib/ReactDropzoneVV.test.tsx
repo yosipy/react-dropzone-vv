@@ -1,6 +1,5 @@
-import { afterEach, beforeEach, describe, expect, test } from "vitest"
-import { render, fireEvent, act, cleanup } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { afterEach, describe, expect, test } from "vitest"
+import { render, fireEvent, cleanup } from "@testing-library/react"
 import { FC } from "react"
 import { OnSelectProps, ReactDropzoneVV } from "./ReactDropzoneVV"
 import { useReactDropzoneVV } from "./useReactDropzoneVV"
@@ -9,7 +8,6 @@ import { RejectedClassifiedFile } from "./types"
 let acceptedFiles: File[]
 let fileRejections: RejectedClassifiedFile[]
 
-// Mock a file
 const file = new File(["dummy content"], "example.png", { type: "image/png" })
 
 type Props = {
