@@ -24,18 +24,22 @@ export type ReactDropzoneVVProps = Omit<
   accept?: string
   disabled?: boolean
   multiple?: boolean
+  noClick?: boolean
+  noDrag?: boolean
   onDrop?: (files: File[]) => void
   onSelect?: (props: OnSelectProps) => void
   onError?: (error: Error) => void
 }
 
 export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
+  children,
+  reactDropzoneVV: { setIsDragging, isDragging, inputRef, openSelector },
+  inputProps,
   accept = "",
   disabled = false,
   multiple = true,
-  reactDropzoneVV: { setIsDragging, isDragging, inputRef, openSelector },
-  children,
-  inputProps,
+  noClick = false,
+  noDrag = false,
   onDrop,
   onSelect,
   onError,
@@ -45,31 +49,40 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
+
+      if (noDrag) return
+
       setIsDragging(true)
     },
-    [setIsDragging]
+    [noDrag, setIsDragging]
   )
 
   const handleDragLeaveDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
+
+      if (noDrag) return
+
       if (!event.currentTarget.contains(event.relatedTarget as Node)) {
         setIsDragging(false)
       }
     },
-    [setIsDragging]
+    [noDrag, setIsDragging]
   )
 
   const handleDragOverDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
+
+      if (noDrag) return
+
       if (!isDragging) {
         setIsDragging(true)
       }
     },
-    [isDragging, setIsDragging]
+    [noDrag, isDragging, setIsDragging]
   )
 
   const handleDropDiv = useCallback(
@@ -77,6 +90,9 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       try {
         event.preventDefault()
         event.stopPropagation()
+
+        if (noDrag) return
+
         setIsDragging(false)
 
         const files = Array.from(event.dataTransfer.files)
@@ -102,15 +118,19 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         }
       }
     },
-    [accept, multiple, setIsDragging, onDrop, onSelect, onError]
+    [accept, multiple, noDrag, setIsDragging, onDrop, onSelect, onError]
   )
 
   const handleClickDiv = () => {
+    if (noClick) return
+
     openSelector()
   }
 
   const handleChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (noClick) return
+
       try {
         const files = Array.from(event.target.files || [])
         if (files.length > 0) {
@@ -134,7 +154,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         }
       }
     },
-    [accept, multiple, onSelect, onError]
+    [accept, multiple, noClick, onSelect, onError]
   )
 
   return (
