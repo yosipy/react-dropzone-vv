@@ -14,96 +14,104 @@ export type ReactDropzoneVVProps = HTMLProps<HTMLDivElement> & {
 }
 
 export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
-  reactDropzoneVV,
+  reactDropzoneVV: {
+    accept,
+    disabled,
+    disabledDropOnDocment,
+    multiple,
+    setIsDragging,
+    isDragging,
+    inputRef,
+    onDrop,
+    onSelect,
+    onError,
+    ...reactDropzoneVV
+  },
   inputProps,
   children,
   ...props
 }) => {
-  const onDragEnterDiv = useCallback(
+  const handleDragEnterDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
-      reactDropzoneVV.setIsDragging(true)
+      setIsDragging(true)
     },
-    [reactDropzoneVV.setIsDragging]
+    [setIsDragging]
   )
 
-  const onDragLeaveDiv = useCallback(
+  const handleDragLeaveDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
       if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-        reactDropzoneVV.setIsDragging(false)
+        setIsDragging(false)
       }
     },
-    [reactDropzoneVV.setIsDragging]
+    [setIsDragging]
   )
 
-  const onDragOverDiv = useCallback(
+  const handleDragOverDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
-      if (!reactDropzoneVV.isDragging) reactDropzoneVV.setIsDragging(true)
+      if (!isDragging) {
+        setIsDragging(true)
+      }
     },
-    [reactDropzoneVV.isDragging, reactDropzoneVV.setIsDragging]
+    [isDragging, setIsDragging]
   )
 
-  const dependenciesForDivideByAcceptability = [
-    reactDropzoneVV.accept,
-    reactDropzoneVV.multiple,
-  ]
-
-  const onDropDiv = useCallback(
+  const handleDropDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       try {
         event.preventDefault()
         event.stopPropagation()
-        reactDropzoneVV.setIsDragging(false)
+        setIsDragging(false)
 
         const files = Array.from(event.dataTransfer.files)
 
-        if (reactDropzoneVV.onDrop) reactDropzoneVV.onDrop(files)
+        if (onDrop) {
+          onDrop(files)
+        }
         const classifiedFiles = classifyByAcceptability(files, {
-          accept: reactDropzoneVV.accept,
-          multiple: reactDropzoneVV.multiple,
+          accept: accept,
+          multiple: multiple,
         })
         const { acceptedFiles, fileRejections } =
           splitClassifiedFiles(classifiedFiles)
-        if (reactDropzoneVV.onSelect)
-          reactDropzoneVV.onSelect({
+        if (onSelect)
+          onSelect({
             acceptedFiles,
             fileRejections,
             classifiedFiles,
           })
       } catch (error) {
-        if (reactDropzoneVV.onError) reactDropzoneVV.onError(ensureError(error))
+        if (onError) {
+          onError(ensureError(error))
+        }
       }
     },
-    [
-      ...dependenciesForDivideByAcceptability,
-      reactDropzoneVV.setIsDragging,
-      reactDropzoneVV.onDrop,
-      reactDropzoneVV.onSelect,
-    ]
+    [accept, multiple, setIsDragging, onDrop, onSelect, onError]
   )
 
-  const onClickDiv = () => {
+  const handleClickDiv = () => {
     reactDropzoneVV.open()
   }
 
-  const onChangeInput = useCallback(
+  const handleChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       try {
         const files = Array.from(event.target.files || [])
         if (files.length > 0) {
           const classifiedFiles = classifyByAcceptability(files, {
-            accept: reactDropzoneVV.accept,
-            multiple: reactDropzoneVV.multiple,
+            accept: accept,
+            multiple: multiple,
           })
           const { acceptedFiles, fileRejections } =
             splitClassifiedFiles(classifiedFiles)
-          if (reactDropzoneVV.onSelect)
-            reactDropzoneVV.onSelect({
+          if (onSelect)
+            onSelect({
               acceptedFiles,
               fileRejections,
               classifiedFiles,
@@ -111,10 +119,12 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         }
         event.target.value = ""
       } catch (error) {
-        if (reactDropzoneVV.onError) reactDropzoneVV.onError(ensureError(error))
+        if (onError) {
+          onError(ensureError(error))
+        }
       }
     },
-    [...dependenciesForDivideByAcceptability, reactDropzoneVV.onSelect]
+    [accept, multiple, onSelect, onError]
   )
 
   useEffect(() => {
@@ -123,37 +133,37 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       event.stopPropagation()
     }
 
-    if (reactDropzoneVV.disabledDropOnDocment) {
+    if (disabledDropOnDocment) {
       document.addEventListener("dragover", handleDocumentDrop)
       document.addEventListener("drop", handleDocumentDrop)
     }
 
     return () => {
-      if (reactDropzoneVV.disabledDropOnDocment) {
+      if (disabledDropOnDocment) {
         document.removeEventListener("dragover", handleDocumentDrop)
         document.removeEventListener("drop", handleDocumentDrop)
       }
     }
-  }, [reactDropzoneVV.disabledDropOnDocment])
+  }, [disabledDropOnDocment])
 
   return (
     <div
       {...props}
-      onDragEnter={reactDropzoneVV.disabled ? undefined : onDragEnterDiv}
-      onDragLeave={reactDropzoneVV.disabled ? undefined : onDragLeaveDiv}
-      onDragOver={reactDropzoneVV.disabled ? undefined : onDragOverDiv}
-      onDrop={reactDropzoneVV.disabled ? undefined : onDropDiv}
-      onClick={reactDropzoneVV.disabled ? undefined : onClickDiv}
+      onDragEnter={disabled ? undefined : handleDragEnterDiv}
+      onDragLeave={disabled ? undefined : handleDragLeaveDiv}
+      onDragOver={disabled ? undefined : handleDragOverDiv}
+      onDrop={disabled ? undefined : handleDropDiv}
+      onClick={disabled ? undefined : handleClickDiv}
     >
       <input
-        accept={reactDropzoneVV.accept}
-        disabled={reactDropzoneVV.disabled}
-        multiple={reactDropzoneVV.multiple}
-        ref={reactDropzoneVV.inputRef}
+        accept={accept}
+        disabled={disabled}
+        multiple={multiple}
+        ref={inputRef}
         style={{ display: "none" }}
         type="file"
         {...inputProps}
-        onChange={onChangeInput}
+        onChange={handleChangeInput}
       />
       {children}
     </div>
