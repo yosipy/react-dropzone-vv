@@ -41,7 +41,7 @@ export const Basic: FC = () => {
     setFileRejections(props.fileRejections)
   }
 
-  const hendleError = (e: Error) => {
+  const handleError = (e: Error) => {
     console.log(e)
   }
 
@@ -50,7 +50,7 @@ export const Basic: FC = () => {
       <ReactDropzoneVV
         reactDropzoneVV={reactDropzoneVV}
         onSelect={handleSelect}
-        onError={hendleError}
+        onError={handleError}
       >
         <div
           style={{
