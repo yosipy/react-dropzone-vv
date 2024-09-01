@@ -31,7 +31,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
   children,
   ...props
 }) => {
-  const onDragEnterDiv = useCallback(
+  const handleDragEnterDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
@@ -40,7 +40,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     [setIsDragging]
   )
 
-  const onDragLeaveDiv = useCallback(
+  const handleDragLeaveDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
@@ -51,7 +51,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     [setIsDragging]
   )
 
-  const onDragOverDiv = useCallback(
+  const handleDragOverDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
@@ -62,7 +62,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     [isDragging, setIsDragging]
   )
 
-  const onDropDiv = useCallback(
+  const handleDropDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       try {
         event.preventDefault()
@@ -95,11 +95,11 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     [accept, multiple, setIsDragging, onDrop, onSelect, onError]
   )
 
-  const onClickDiv = () => {
+  const handleClickDiv = () => {
     reactDropzoneVV.open()
   }
 
-  const onChangeInput = useCallback(
+  const handleChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       try {
         const files = Array.from(event.target.files || [])
@@ -149,11 +149,11 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
   return (
     <div
       {...props}
-      onDragEnter={disabled ? undefined : onDragEnterDiv}
-      onDragLeave={disabled ? undefined : onDragLeaveDiv}
-      onDragOver={disabled ? undefined : onDragOverDiv}
-      onDrop={disabled ? undefined : onDropDiv}
-      onClick={disabled ? undefined : onClickDiv}
+      onDragEnter={disabled ? undefined : handleDragEnterDiv}
+      onDragLeave={disabled ? undefined : handleDragLeaveDiv}
+      onDragOver={disabled ? undefined : handleDragOverDiv}
+      onDrop={disabled ? undefined : handleDropDiv}
+      onClick={disabled ? undefined : handleClickDiv}
     >
       <input
         accept={accept}
@@ -163,7 +163,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         style={{ display: "none" }}
         type="file"
         {...inputProps}
-        onChange={onChangeInput}
+        onChange={handleChangeInput}
       />
       {children}
     </div>
