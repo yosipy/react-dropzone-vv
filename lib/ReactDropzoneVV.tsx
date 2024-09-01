@@ -18,10 +18,9 @@ export type ReactDropzoneVVProps = Omit<
   HTMLProps<HTMLDivElement>,
   "accept" | "disabled" | "multiple" | "onSelect" | "onError" | "onDrop"
 > & {
+  children: ReactNode
   reactDropzoneVV: UseReactDropzoneVV
   inputProps?: HTMLProps<HTMLInputElement>
-  children: ReactNode
-} & {
   accept?: string
   disabled?: boolean
   multiple?: boolean
