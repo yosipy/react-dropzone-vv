@@ -1,27 +1,29 @@
 import { FC } from "react"
-import { useReactDropzoneVV, ReactDropzoneVV } from "@lib/index"
+import { useReactDropzoneVV, ReactDropzoneVV, OnSelectProps } from "@lib/index"
 
 const App: FC = () => {
   const reactDropzoneVV = useReactDropzoneVV({
     accept: ".png,.jpg,.jpeg,.webp",
     disabledDropOnDocment: true,
-    onSelect: async ({ classifiedFiles }) => {
-      const acceptedFiles = classifiedFiles
-        .filter((classifiedFile) => classifiedFile.status == "accepted")
-        .map((classifiedFile) => classifiedFile.file)
-      const fileRejections = classifiedFiles.filter(
-        (classifiedFile) => classifiedFile.status == "rejected"
-      )
-      console.log("acceptedFiles:")
-      console.log(acceptedFiles)
-      console.log("fileRejections:")
-      console.log(fileRejections)
-    },
-    onError: (e) => {
-      console.log("error!")
-      console.log(e)
-    },
   })
+
+  const handleSelect = ({ classifiedFiles }: OnSelectProps) => {
+    const acceptedFiles = classifiedFiles
+      .filter((classifiedFile) => classifiedFile.status == "accepted")
+      .map((classifiedFile) => classifiedFile.file)
+    const fileRejections = classifiedFiles.filter(
+      (classifiedFile) => classifiedFile.status == "rejected"
+    )
+    console.log("acceptedFiles:")
+    console.log(acceptedFiles)
+    console.log("fileRejections:")
+    console.log(fileRejections)
+  }
+
+  const handleErrror = (e: Error) => {
+    console.log("error!")
+    console.log(e)
+  }
 
   return (
     <>
@@ -32,6 +34,8 @@ const App: FC = () => {
           borderStyle: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "grey" : "",
         }}
+        onSelect={handleSelect}
+        onError={handleErrror}
       >
         <>
           <em>(png, jpeg, webp)</em>

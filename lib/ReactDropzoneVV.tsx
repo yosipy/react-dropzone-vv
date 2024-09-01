@@ -6,11 +6,25 @@ import {
   ensureError,
   splitClassifiedFiles,
 } from "./utils"
+import { ClassifiedFile, RejectedClassifiedFile } from "./types"
 
-export type ReactDropzoneVVProps = HTMLProps<HTMLDivElement> & {
+export type OnSelectProps = {
+  acceptedFiles: File[]
+  fileRejections: RejectedClassifiedFile[]
+  classifiedFiles: ClassifiedFile[]
+}
+
+export type ReactDropzoneVVProps = Omit<
+  HTMLProps<HTMLDivElement>,
+  "onSelect" | "onError" | "onDrop"
+> & {
   reactDropzoneVV: UseReactDropzoneVV
   inputProps?: HTMLProps<HTMLInputElement>
   children: ReactNode
+} & {
+  onDrop?: (files: File[]) => void
+  onSelect?: (props: OnSelectProps) => void
+  onError?: (error: Error) => void
 }
 
 export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
@@ -23,12 +37,12 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     isDragging,
     inputRef,
     openSelector,
-    onDrop,
-    onSelect,
-    onError,
   },
-  inputProps,
   children,
+  inputProps,
+  onDrop,
+  onSelect,
+  onError,
   ...props
 }) => {
   const handleDragEnterDiv = useCallback(

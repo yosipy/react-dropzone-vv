@@ -1,14 +1,14 @@
 import { FC, useState } from "react"
-import { useReactDropzoneVV, ReactDropzoneVV } from "@lib/index"
+import { useReactDropzoneVV, ReactDropzoneVV, OnSelectProps } from "@lib/index"
 
 export const OpenProgrammatically: FC = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
 
-  const reactDropzoneVV = useReactDropzoneVV({
-    onSelect: async ({ acceptedFiles }) => {
-      setSelectedFiles(acceptedFiles)
-    },
-  })
+  const reactDropzoneVV = useReactDropzoneVV({})
+
+  const handleSelect = ({ acceptedFiles }: OnSelectProps) => {
+    setSelectedFiles(acceptedFiles)
+  }
 
   return (
     <section style={{ border: "solid", padding: "1rem" }}>
@@ -19,6 +19,7 @@ export const OpenProgrammatically: FC = () => {
           border: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
         }}
+        onSelect={handleSelect}
       >
         <p>Drag & drop some files here, or click to select files</p>
       </ReactDropzoneVV>

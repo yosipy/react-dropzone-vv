@@ -3,6 +3,7 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
+  OnSelectProps,
 } from "@lib/index"
 
 export const Accept: FC = () => {
@@ -13,11 +14,12 @@ export const Accept: FC = () => {
 
   const reactDropzoneVV = useReactDropzoneVV({
     accept: "image/png,.webp",
-    onSelect: async (props) => {
-      setAcceptedFiles(props.acceptedFiles)
-      setFileRejections(props.fileRejections)
-    },
   })
+
+  const handleSelect = (props: OnSelectProps) => {
+    setAcceptedFiles(props.acceptedFiles)
+    setFileRejections(props.fileRejections)
+  }
 
   return (
     <section style={{ border: "solid", padding: "1rem" }}>
@@ -28,6 +30,7 @@ export const Accept: FC = () => {
           border: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
         }}
+        onSelect={handleSelect}
       >
         <p>Drag & drop some files here, or click to select files</p>
         <p>
