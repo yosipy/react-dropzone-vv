@@ -154,7 +154,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         }
       }
     },
-    [accept, multiple, onSelect, onError]
+    [accept, multiple, noClick, onSelect, onError]
   )
 
   return (
