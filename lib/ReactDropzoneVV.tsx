@@ -16,27 +16,25 @@ export type OnSelectProps = {
 
 export type ReactDropzoneVVProps = Omit<
   HTMLProps<HTMLDivElement>,
-  "onSelect" | "onError" | "onDrop"
+  "accept" | "disabled" | "multiple" | "onSelect" | "onError" | "onDrop"
 > & {
   reactDropzoneVV: UseReactDropzoneVV
   inputProps?: HTMLProps<HTMLInputElement>
   children: ReactNode
 } & {
+  accept?: string
+  disabled?: boolean
+  multiple?: boolean
   onDrop?: (files: File[]) => void
   onSelect?: (props: OnSelectProps) => void
   onError?: (error: Error) => void
 }
 
 export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
-  reactDropzoneVV: {
-    accept,
-    disabled,
-    multiple,
-    setIsDragging,
-    isDragging,
-    inputRef,
-    openSelector,
-  },
+  accept = "",
+  disabled = false,
+  multiple = true,
+  reactDropzoneVV: { setIsDragging, isDragging, inputRef, openSelector },
   children,
   inputProps,
   onDrop,

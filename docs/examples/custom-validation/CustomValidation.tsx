@@ -13,7 +13,7 @@ export const CustomValidation: FC = () => {
     RejectedClassifiedFile[]
   >([])
 
-  const reactDropzoneVV = useReactDropzoneVV({})
+  const reactDropzoneVV = useReactDropzoneVV()
 
   const handleSelect = ({ classifiedFiles }: OnSelectProps) => {
     const maxLength = 20

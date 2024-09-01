@@ -2,9 +2,7 @@ import { FC } from "react"
 import { useReactDropzoneVV, ReactDropzoneVV, OnSelectProps } from "@lib/index"
 
 const App: FC = () => {
-  const reactDropzoneVV = useReactDropzoneVV({
-    accept: ".png,.jpg,.jpeg,.webp",
-  })
+  const reactDropzoneVV = useReactDropzoneVV()
 
   const handleSelect = ({ classifiedFiles }: OnSelectProps) => {
     const acceptedFiles = classifiedFiles
@@ -33,6 +31,7 @@ const App: FC = () => {
           borderStyle: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "grey" : "",
         }}
+        accept=".png,.jpg,.jpeg,.webp"
         onSelect={handleSelect}
         onError={handleErrror}
       >
