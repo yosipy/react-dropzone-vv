@@ -1,5 +1,10 @@
-import { afterEach, describe, expect, test } from "vitest"
-import { render, fireEvent, cleanup } from "@testing-library/react"
+import { afterEach, beforeEach, describe, expect, test } from "vitest"
+import {
+  render,
+  fireEvent,
+  cleanup,
+  RenderResult,
+} from "@testing-library/react"
 import { FC } from "react"
 import { OnSelectProps, ReactDropzoneVV } from "./ReactDropzoneVV"
 import { useReactDropzoneVV } from "./useReactDropzoneVV"
@@ -16,15 +21,21 @@ type Props = {
   multiple?: boolean
   noClick?: boolean
   noDrag?: boolean
+  onDragEnter?: (event: React.DragEvent<HTMLDivElement>) => void
+  onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void
+  onDragLeave?: (event: React.DragEvent<HTMLDivElement>) => void
+  onDrop?: (files: File[]) => void
+  onSelect?: (props: OnSelectProps) => void
 }
 
 const TestComponent: FC<Props> = (props) => {
   const reactDropzoneVV = useReactDropzoneVV()
 
-  const handleSelect = (props: OnSelectProps) => {
-    console.log("handleSelect")
-    acceptedFiles = props.acceptedFiles
-    fileRejections = props.fileRejections
+  const handleSelect = (onSelectProps: OnSelectProps) => {
+    acceptedFiles = onSelectProps.acceptedFiles
+    fileRejections = onSelectProps.fileRejections
+
+    if (props.onSelect) props.onSelect(onSelectProps)
   }
 
   return (
@@ -35,6 +46,10 @@ const TestComponent: FC<Props> = (props) => {
       multiple={props.multiple}
       noClick={props.noClick}
       noDrag={props.noDrag}
+      onDragEnter={props.onDragEnter}
+      onDragOver={props.onDragOver}
+      onDragLeave={props.onDragLeave}
+      onDrop={props.onDrop}
       onSelect={handleSelect}
     >
       dropzone
@@ -162,6 +177,75 @@ describe("ReactDropzoneVV", () => {
 
         expect(acceptedFiles.length).toBe(1)
         expect(fileRejections.length).toBe(0)
+      })
+    })
+  })
+
+  describe("callback functions", () => {
+    let actions: string[] = []
+    beforeEach(() => {
+      actions = []
+    })
+
+    const example = (): RenderResult => {
+      return render(
+        <TestComponent
+          onDragEnter={() => actions.push("onDragEnter")}
+          onDragOver={() => actions.push("onDragOver")}
+          onDragLeave={() => actions.push("onDragLeave")}
+          onDrop={() => actions.push("onDrop")}
+          onSelect={() => actions.push("onSelect")}
+        />
+      )
+    }
+
+    describe("If click and select file", () => {
+      test("should run callbacks", async () => {
+        const { container } = example()
+        const inputElem = container.querySelector("input")
+
+        if (!inputElem) throw new Error("inputElem is null")
+        fireEvent.change(inputElem, {
+          target: { files: [file] },
+        })
+
+        expect(actions).toStrictEqual(["onSelect"])
+      })
+    })
+
+    describe("If drag file", () => {
+      describe("If only drag", () => {
+        test("should run callbacks", async () => {
+          const { getByText } = example()
+          const dropzone = getByText(/dropzone/i)
+
+          const options = {
+            dataTransfer: { files: [file] },
+          }
+          fireEvent.dragEnter(dropzone, options)
+          fireEvent.dragOver(dropzone, options)
+          fireEvent.dragLeave(dropzone, options)
+
+          expect(actions).toStrictEqual([
+            "onDragEnter",
+            "onDragOver",
+            "onDragLeave",
+          ])
+        })
+      })
+
+      describe("If drag and drop", () => {
+        test("should run callbacks", async () => {
+          const { getByText } = example()
+          const dropzone = getByText(/dropzone/i)
+
+          const options = {
+            dataTransfer: { files: [file] },
+          }
+          fireEvent.drop(dropzone, options)
+
+          expect(actions).toStrictEqual(["onDrop", "onSelect"])
+        })
       })
     })
   })
