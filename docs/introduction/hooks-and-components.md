@@ -14,17 +14,22 @@
 
 ### PROPS & METHODS
 
-| Prop name       | Type                           | Default | Description                                                                   |
-| --------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------- |
-| children        | ReactNode                      |         |                                                                               |
-| reactDropzoneVV | UseReactDropzoneVV             |         | The return value of useReactDropzoneVV.                                       |
-| inputProps      | HTMLProps<HTMLInputElement\>   |         |                                                                               |
-| accept          | string                         | ""      |                                                                               |
-| disabled        | boolean                        | false   |                                                                               |
-| multiple        | boolean                        | true    |                                                                               |
-| onDrop          | (files: File[]) => void        |         |                                                                               |
-| onSelect        | (props: OnSelectProps) => void |         | Callbacks when the Drop event occurs and when a file is selected in a dialog. |
-| onError         | (error: Error) => void         |         |                                                                               |
+| Prop name       | Type                                        | Default | Description                                                                   |
+| --------------- | ------------------------------------------- | ------- | ----------------------------------------------------------------------------- |
+| children        | ReactNode                                   |         |                                                                               |
+| reactDropzoneVV | UseReactDropzoneVV                          |         | The return value of useReactDropzoneVV.                                       |
+| inputProps      | HTMLProps<HTMLInputElement\>                |         |                                                                               |
+| accept          | string                                      | ""      |                                                                               |
+| disabled        | boolean                                     | false   |                                                                               |
+| multiple        | boolean                                     | true    |                                                                               |
+| noClick         | boolean                                     | false   |                                                                               |
+| noDrag          | boolean                                     | false   |                                                                               |
+| onDragEnter     | (event: DragEvent<HTMLDivElement\>) => void |         |                                                                               |
+| onDragOver      | (event: DragEvent<HTMLDivElement\>) => void |         |                                                                               |
+| onDragLeave     | (event: DragEvent<HTMLDivElement\>) => void |         |                                                                               |
+| onDrop          | (files: File[]) => void                     |         |                                                                               |
+| onSelect        | (props: OnSelectProps) => void              |         | Callbacks when the Drop event occurs and when a file is selected in a dialog. |
+| onError         | (error: Error) => void                      |         |                                                                               |
 
 ### Supplement onSelect
 
