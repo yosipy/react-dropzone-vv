@@ -22,10 +22,10 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     setIsDragging,
     isDragging,
     inputRef,
+    openSelector,
     onDrop,
     onSelect,
     onError,
-    ...reactDropzoneVV
   },
   inputProps,
   children,
@@ -96,7 +96,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
   )
 
   const handleClickDiv = () => {
-    reactDropzoneVV.open()
+    openSelector()
   }
 
   const handleChangeInput = useCallback(

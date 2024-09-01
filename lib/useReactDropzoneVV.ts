@@ -27,7 +27,7 @@ export type UseReactDropzoneVV = {
   isDragging: boolean
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
   inputRef: React.RefObject<HTMLInputElement>
-  open: () => void
+  openSelector: () => void
   onDrop?: (files: File[]) => void
   onSelect?: (props: {
     acceptedFiles: File[]
@@ -57,7 +57,7 @@ export const useReactDropzoneVV = ({
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const open = () => {
+  const openSelector = () => {
     inputRef.current?.click()
   }
 
@@ -73,7 +73,7 @@ export const useReactDropzoneVV = ({
     isDragging,
     setIsDragging,
     inputRef,
-    open,
+    openSelector,
     onDrop,
     onSelect,
     onError,

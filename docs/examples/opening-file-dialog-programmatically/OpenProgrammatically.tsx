@@ -25,7 +25,7 @@ export const OpenProgrammatically: FC = () => {
 
       <button
         style={{ border: "solid", margin: "1rem" }}
-        onClick={() => reactDropzoneVV.open()}
+        onClick={() => reactDropzoneVV.openSelector()}
       >
         Open file dialog
       </button>
