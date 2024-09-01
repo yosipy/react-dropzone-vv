@@ -1,18 +1,10 @@
 import { useRef, useState } from "react"
-import type { ClassifiedFile, RejectedClassifiedFile } from "./types"
 
 export type UseReactDropzoneVVProps = {
   accept?: string
   disabled?: boolean
   disabledDropOnDocment?: boolean
   multiple?: boolean
-  onDrop?: (files: File[]) => void
-  onSelect?: (props: {
-    acceptedFiles: File[]
-    fileRejections: RejectedClassifiedFile[]
-    classifiedFiles: ClassifiedFile[]
-  }) => void
-  onError?: (error: Error) => void
 }
 
 export type UseReactDropzoneVV = {
@@ -27,14 +19,7 @@ export type UseReactDropzoneVV = {
   isDragging: boolean
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
   inputRef: React.RefObject<HTMLInputElement>
-  open: () => void
-  onDrop?: (files: File[]) => void
-  onSelect?: (props: {
-    acceptedFiles: File[]
-    fileRejections: RejectedClassifiedFile[]
-    classifiedFiles: ClassifiedFile[]
-  }) => void
-  onError?: (error: Error) => void
+  openSelector: () => void
 }
 
 export const useReactDropzoneVV = ({
@@ -42,9 +27,6 @@ export const useReactDropzoneVV = ({
   disabled: tDisabled = false,
   disabledDropOnDocment: tDisabledDropOnDocment = false,
   multiple: tMultiple = true,
-  onDrop,
-  onSelect,
-  onError,
 }: UseReactDropzoneVVProps = {}): UseReactDropzoneVV => {
   const [accept, setAccept] = useState<string>(tAccept)
   const [disabled, setDisabled] = useState<boolean>(tDisabled)
@@ -57,7 +39,7 @@ export const useReactDropzoneVV = ({
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const open = () => {
+  const openSelector = () => {
     inputRef.current?.click()
   }
 
@@ -73,9 +55,6 @@ export const useReactDropzoneVV = ({
     isDragging,
     setIsDragging,
     inputRef,
-    open,
-    onDrop,
-    onSelect,
-    onError,
+    openSelector,
   }
 }
