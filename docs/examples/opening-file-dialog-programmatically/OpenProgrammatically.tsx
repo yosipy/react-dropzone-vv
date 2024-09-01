@@ -4,7 +4,7 @@ import { useReactDropzoneVV, ReactDropzoneVV, OnSelectProps } from "@lib/index"
 export const OpenProgrammatically: FC = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
 
-  const reactDropzoneVV = useReactDropzoneVV({})
+  const reactDropzoneVV = useReactDropzoneVV()
 
   const handleSelect = ({ acceptedFiles }: OnSelectProps) => {
     setSelectedFiles(acceptedFiles)

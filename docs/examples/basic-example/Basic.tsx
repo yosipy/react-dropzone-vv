@@ -12,7 +12,7 @@ export const Basic: FC = () => {
     RejectedClassifiedFile[]
   >([])
 
-  const reactDropzoneVV = useReactDropzoneVV({})
+  const reactDropzoneVV = useReactDropzoneVV()
 
   const handleSelect = (props: OnSelectProps) => {
     setAcceptedFiles(props.acceptedFiles)
@@ -26,6 +26,7 @@ export const Basic: FC = () => {
   return (
     <section style={{ border: "solid", padding: "1rem" }}>
       <ReactDropzoneVV
+        multiple={true}
         reactDropzoneVV={reactDropzoneVV}
         style={{
           padding: "2rem",

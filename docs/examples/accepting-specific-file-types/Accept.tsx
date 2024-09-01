@@ -12,9 +12,7 @@ export const Accept: FC = () => {
     RejectedClassifiedFile[]
   >([])
 
-  const reactDropzoneVV = useReactDropzoneVV({
-    accept: "image/png,.webp",
-  })
+  const reactDropzoneVV = useReactDropzoneVV()
 
   const handleSelect = (props: OnSelectProps) => {
     setAcceptedFiles(props.acceptedFiles)
@@ -30,6 +28,7 @@ export const Accept: FC = () => {
           border: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
         }}
+        accept="image/png,.webp"
         onSelect={handleSelect}
       >
         <p>Drag & drop some files here, or click to select files</p>

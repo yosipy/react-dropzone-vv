@@ -3,6 +3,7 @@ import {
   useReactDropzoneVV,
   ReactDropzoneVV,
   RejectedClassifiedFile,
+  OnSelectProps,
 } from "@lib/index"
 
 export const Introduction: FC = () => {
@@ -11,16 +12,16 @@ export const Introduction: FC = () => {
     RejectedClassifiedFile[]
   >([])
 
-  const reactDropzoneVV = useReactDropzoneVV({
-    accept: "image/*",
-    onSelect: async (props) => {
-      setAcceptedFiles(props.acceptedFiles)
-      setFileRejections(props.fileRejections)
-    },
-    onError: (e) => {
-      console.log(e)
-    },
-  })
+  const reactDropzoneVV = useReactDropzoneVV()
+
+  const handleSelect = (props: OnSelectProps) => {
+    setAcceptedFiles(props.acceptedFiles)
+    setFileRejections(props.fileRejections)
+  }
+
+  const handleError = (e: Error) => {
+    console.log(e)
+  }
 
   return (
     <section style={{ border: "solid", padding: "1rem" }}>
@@ -31,6 +32,9 @@ export const Introduction: FC = () => {
           border: "dashed",
           backgroundColor: reactDropzoneVV.isDragging ? "#737373" : "#404040",
         }}
+        accept="image/*"
+        onSelect={handleSelect}
+        onError={handleError}
       >
         <p>Drag & drop some files here, or click to select files</p>
         <p>{'(Allowed mime type is "image/*"")'}</p>
