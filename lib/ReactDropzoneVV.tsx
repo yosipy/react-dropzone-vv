@@ -14,7 +14,7 @@ export type ReactDropzoneVVProps = HTMLProps<HTMLDivElement> & {
 }
 
 export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
-  reactDropzoneVV,
+  reactDropzoneVV: { setIsDragging, ...reactDropzoneVV },
   inputProps,
   children,
   ...props
@@ -23,9 +23,9 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
-      reactDropzoneVV.setIsDragging(true)
+      setIsDragging(true)
     },
-    [reactDropzoneVV.setIsDragging]
+    [setIsDragging]
   )
 
   const onDragLeaveDiv = useCallback(
@@ -33,19 +33,21 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       event.preventDefault()
       event.stopPropagation()
       if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-        reactDropzoneVV.setIsDragging(false)
+        setIsDragging(false)
       }
     },
-    [reactDropzoneVV.setIsDragging]
+    [setIsDragging]
   )
 
   const onDragOverDiv = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
       event.stopPropagation()
-      if (!reactDropzoneVV.isDragging) reactDropzoneVV.setIsDragging(true)
+      if (!reactDropzoneVV.isDragging) {
+        setIsDragging(true)
+      }
     },
-    [reactDropzoneVV.isDragging, reactDropzoneVV.setIsDragging]
+    [reactDropzoneVV.isDragging, setIsDragging]
   )
 
   const dependenciesForDivideByAcceptability = [
@@ -58,7 +60,7 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       try {
         event.preventDefault()
         event.stopPropagation()
-        reactDropzoneVV.setIsDragging(false)
+        setIsDragging(false)
 
         const files = Array.from(event.dataTransfer.files)
 
@@ -76,12 +78,14 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
             classifiedFiles,
           })
       } catch (error) {
-        if (reactDropzoneVV.onError) reactDropzoneVV.onError(ensureError(error))
+        if (reactDropzoneVV.onError) {
+          reactDropzoneVV.onError(ensureError(error))
+        }
       }
     },
     [
       ...dependenciesForDivideByAcceptability,
-      reactDropzoneVV.setIsDragging,
+      setIsDragging,
       reactDropzoneVV.onDrop,
       reactDropzoneVV.onSelect,
     ]
@@ -111,7 +115,9 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
         }
         event.target.value = ""
       } catch (error) {
-        if (reactDropzoneVV.onError) reactDropzoneVV.onError(ensureError(error))
+        if (reactDropzoneVV.onError) {
+          reactDropzoneVV.onError(ensureError(error))
+        }
       }
     },
     [...dependenciesForDivideByAcceptability, reactDropzoneVV.onSelect]
