@@ -71,6 +71,13 @@ describe("ReactDropzoneVV", () => {
         })
 
         expect(acceptedFiles).toStrictEqual([])
+        expect(fileRejections).toStrictEqual([
+          {
+            status: "rejected",
+            file,
+            rejectedCode: "accept-violations",
+          },
+        ])
       })
     })
   })
