@@ -26,6 +26,9 @@ export type ReactDropzoneVVProps = Omit<
   multiple?: boolean
   noClick?: boolean
   noDrag?: boolean
+  onDragEnter?: (event: React.DragEvent<HTMLDivElement>) => void
+  onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void
+  onDragLeave?: (event: React.DragEvent<HTMLDivElement>) => void
   onDrop?: (files: File[]) => void
   onSelect?: (props: OnSelectProps) => void
   onError?: (error: Error) => void
@@ -40,6 +43,9 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
   multiple = true,
   noClick = false,
   noDrag = false,
+  onDragEnter,
+  onDragOver,
+  onDragLeave,
   onDrop,
   onSelect,
   onError,
@@ -53,22 +59,10 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       if (noDrag) return
 
       setIsDragging(true)
+
+      if (onDragEnter) onDragEnter(event)
     },
-    [noDrag, setIsDragging]
-  )
-
-  const handleDragLeaveDiv = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
-
-      if (noDrag) return
-
-      if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-        setIsDragging(false)
-      }
-    },
-    [noDrag, setIsDragging]
+    [noDrag, setIsDragging, onDragEnter]
   )
 
   const handleDragOverDiv = useCallback(
@@ -81,8 +75,26 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
       if (!isDragging) {
         setIsDragging(true)
       }
+
+      if (onDragOver) onDragOver(event)
     },
-    [noDrag, isDragging, setIsDragging]
+    [noDrag, isDragging, setIsDragging, onDragOver]
+  )
+
+  const handleDragLeaveDiv = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+      event.stopPropagation()
+
+      if (noDrag) return
+
+      if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+        setIsDragging(false)
+      }
+
+      if (onDragLeave) onDragLeave(event)
+    },
+    [noDrag, setIsDragging, onDragLeave]
   )
 
   const handleDropDiv = useCallback(
@@ -97,21 +109,21 @@ export const ReactDropzoneVV: FC<ReactDropzoneVVProps> = ({
 
         const files = Array.from(event.dataTransfer.files)
 
-        if (onDrop) {
-          onDrop(files)
-        }
+        if (onDrop) onDrop(files)
+
         const classifiedFiles = classifyByAcceptability(files, {
           accept: accept,
           multiple: multiple,
         })
         const { acceptedFiles, fileRejections } =
           splitClassifiedFiles(classifiedFiles)
-        if (onSelect)
+        if (onSelect) {
           onSelect({
             acceptedFiles,
             fileRejections,
             classifiedFiles,
           })
+        }
       } catch (error) {
         if (onError) {
           onError(ensureError(error))
