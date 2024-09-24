@@ -13,7 +13,7 @@ export default defineConfig({
       entry: "lib/index.ts",
       name: "react-dropzone-vv",
       fileName: "index",
-      formats: ["es", "umd"],
+      formats: ["es", "cjs"],
     },
     rollupOptions: {
       external: ["react", "react-dom"],
