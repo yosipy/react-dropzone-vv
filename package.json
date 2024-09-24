@@ -17,15 +17,15 @@
     "url": "https://github.com/yosipy/react-dropzone-vv"
   },
   "type": "module",
-  "main": "./dist/index.umd.cjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/lib/index.d.ts",
   "exports": {
     "types": "./dist/lib/index.d.ts",
     "import": "./dist/index.js",
-    "require": "./dist/index.umd.cjs",
-    "node": "./dist/index.umd.cjs",
-    "default": "./dist/index.umd.cjs"
+    "require": "./dist/index.cjs",
+    "node": "./dist/index.cjs",
+    "default": "./dist/index.cjs"
   },
   "files": [
     "dist"
