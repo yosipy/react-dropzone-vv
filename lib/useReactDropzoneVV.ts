@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 export type UseReactDropzoneVV = {
   isDragging: boolean
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
-  inputRef: React.RefObject<HTMLInputElement>
+  inputRef: React.RefObject<HTMLInputElement | null>
   openSelector: () => void
 }
 
