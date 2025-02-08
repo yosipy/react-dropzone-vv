@@ -14,9 +14,9 @@ export const Accept: FC = () => {
 
   const reactDropzoneVV = useReactDropzoneVV()
 
-  const handleSelect = (props: OnSelectProps) => {
-    setAcceptedFiles(props.acceptedFiles)
-    setFileRejections(props.fileRejections)
+  const handleSelect = ({ acceptedFiles, fileRejections }: OnSelectProps) => {
+    setAcceptedFiles(acceptedFiles)
+    setFileRejections(fileRejections)
   }
 
   return (

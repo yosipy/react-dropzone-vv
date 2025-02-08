@@ -36,9 +36,9 @@ export const Basic: FC = () => {
 
   const reactDropzoneVV = useReactDropzoneVV()
 
-  const handleSelect = (props: OnSelectProps) => {
-    setAcceptedFiles(props.acceptedFiles)
-    setFileRejections(props.fileRejections)
+  const handleSelect = ({ acceptedFiles, fileRejections }: OnSelectProps) => {
+    setAcceptedFiles(acceptedFiles)
+    setFileRejections(fileRejections)
   }
 
   const handleError = (e: Error) => {
