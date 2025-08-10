@@ -52,7 +52,7 @@
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.7",
     "@vitejs/plugin-react-swc": "3.8.0",
-    "eslint": "9.25.1",
+    "eslint": "9.33.0",
     "eslint-plugin-react": "7.37.5",
     "globals": "15.14.0",
     "jsdom": "26.0.0",
